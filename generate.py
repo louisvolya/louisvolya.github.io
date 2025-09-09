@@ -1,7 +1,7 @@
 import os
 
-POEMS_DIR = "poems"       # Input poems directory
-OUTPUT_DIR = "site"       # Output site directory
+POEMS_DIR = "poems"       # input poems directory
+OUTPUT_DIR = "site"       # output site directory
 TEMPLATE_FILE = "templates/index_skeleton.html"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -18,7 +18,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
     if not os.path.isdir(book_path):
         continue
     display_name = book.replace("_", " ")
-    # Link to the book's main page inside its directory
+    # link to the book's main page inside its folder
     book_index = f"{book}/{book}.html"
     homepage_content += f"<li><a href='{book_index}'>{display_name}</a></li>\n"
 
@@ -39,36 +39,38 @@ for book in sorted(os.listdir(POEMS_DIR)):
     book_output_dir = os.path.join(OUTPUT_DIR, book)
     os.makedirs(book_output_dir, exist_ok=True)
 
-    poem_links = []  # store links to poems for the book page
+    poem_links = []
 
-    # There should be only one txt file per book
+    # Each book contains one poem txt file
     for filename in sorted(os.listdir(book_path)):
         if filename.endswith(".txt"):
             poem_path = os.path.join(book_path, filename)
             with open(poem_path, "r", encoding="utf-8") as f:
-                lines = f.read().splitlines()
-                if not lines:
-                    continue
-                title = lines[0].replace("Title: ", "").strip()
-                content = "\n".join(lines[1:]).strip()
+                content = f.read().strip()  # preserve line breaks
 
-            # Generate poem page inside book directory
+            # Extract title from first line
+            lines = content.splitlines()
+            if not lines:
+                continue
+            title = lines[0].replace("Title: ", "").strip()
+
+            # Poem page filename
             poem_file_name = f"{os.path.splitext(filename)[0]}.html"
-            poem_file = os.path.join(book_output_dir, poem_file_name)
+            poem_file_path = os.path.join(book_output_dir, poem_file_name)
 
+            # Generate individual poem page
             poem_html = (
                 f"<h2>{title}</h2>\n"
                 f"<div class='poem-box'>{content}</div>\n"
                 f"<p><a href='{book}.html'>← Back to {book_display_name}</a></p>"
             )
 
-            with open(poem_file, "w", encoding="utf-8") as f:
+            with open(poem_file_path, "w", encoding="utf-8") as f:
                 f.write(template.replace("{poems_html}", poem_html))
 
-            # Add link for book page
             poem_links.append((title, poem_file_name))
 
-    # Generate the main book page inside the book directory
+    # Generate main book page listing poems
     book_page_html = f"<h1>{book_display_name}</h1>\n<ul>\n"
     for title, link in poem_links:
         book_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
@@ -78,4 +80,4 @@ for book in sorted(os.listdir(POEMS_DIR)):
     with open(book_page_file, "w", encoding="utf-8") as f:
         f.write(template.replace("{poems_html}", book_page_html))
 
-    print(f"Generated book '{book}' with its poem pages.")
+    print(f"Generated book '{book}' and its poem page(s).")
