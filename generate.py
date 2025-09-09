@@ -67,7 +67,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
             poem_html = (
                 f"<h2>{title}</h2>\n"
                 f"<div class='poem-box'>{content}</div>\n"
-                f"<p><a href='{book}.html'>← Back to {book_display_name}</a></p>"
+                f"<p><a href='{book}.html'>← {book_display_name}</a></p>"
             )
 
             with open(poem_file_path, "w", encoding="utf-8") as f:
@@ -79,7 +79,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
     book_page_html = f"<h1>{book_display_name}</h1>\n<ul>\n"
     for title, link in poem_links:
         book_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
-    book_page_html += "</ul>\n<p><a href='../index.html'>← Back to main page</a></p>"
+    book_page_html += "</ul>\n<p><a href='../index.html'>← Menu principal</a></p>"
 
     book_page_file = os.path.join(book_output_dir, f"{book}.html")
     with open(book_page_file, "w", encoding="utf-8") as f:
