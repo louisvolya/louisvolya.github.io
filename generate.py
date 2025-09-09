@@ -41,18 +41,23 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
     poem_links = []
 
-    # Each book contains one poem txt file
+    # Each book contains one or more poem txt files
     for filename in sorted(os.listdir(book_path)):
         if filename.endswith(".txt"):
             poem_path = os.path.join(book_path, filename)
             with open(poem_path, "r", encoding="utf-8") as f:
-                content = f.read().strip()  # preserve line breaks
+                raw_content = f.read().strip()
 
-            # Extract title from first line
-            lines = content.splitlines()
+            # Extract lines
+            lines = raw_content.splitlines()
             if not lines:
                 continue
+
+            # First line = title
             title = lines[0].replace("Title: ", "").strip()
+
+            # Poem content = skip first 2 lines (title + blank line)
+            content = "\n".join(lines[2:]).strip()
 
             # Poem page filename
             poem_file_name = f"{os.path.splitext(filename)[0]}.html"
@@ -62,7 +67,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
             poem_html = (
                 f"<h2>{title}</h2>\n"
                 f"<div class='poem-box'>{content}</div>\n"
-                f"<p><a href='{book}.html'>← {book_display_name}</a></p>"
+                f"<p><a href='{book}.html'>← Back to {book_display_name}</a></p>"
             )
 
             with open(poem_file_path, "w", encoding="utf-8") as f:
@@ -74,7 +79,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
     book_page_html = f"<h1>{book_display_name}</h1>\n<ul>\n"
     for title, link in poem_links:
         book_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
-    book_page_html += "</ul>\n<p><a href='../index.html'>← Menu principal</a></p>"
+    book_page_html += "</ul>\n<p><a href='../index.html'>← Back to main page</a></p>"
 
     book_page_file = os.path.join(book_output_dir, f"{book}.html")
     with open(book_page_file, "w", encoding="utf-8") as f:
