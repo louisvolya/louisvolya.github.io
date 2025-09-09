@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ascension</title>
+  <title>Louis Volya</title>
   <style>
     body {
         font-family: Georgia, "Times New Roman", serif;
@@ -24,13 +24,19 @@
         align-items: center;
     }
 
-    h1, h2 {
+    h1 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    h2 {
         text-align: center;
         margin-bottom: 1rem;
         font-weight: normal;
     }
 
-    /* Poem box */
     .poem-box {
         max-width: 600px;
         width: 100%;
@@ -39,13 +45,19 @@
         border-left: 4px solid #ccc;
         border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 1rem;
-        white-space: normal;       /* allow line wrapping */
-        text-align: left;          /* left-aligned text */
+        margin-bottom: 1.5rem;
+        white-space: normal;
+        text-align: left;
         font-family: "Courier New", monospace;
     }
 
-    /* Links */
+    ul {
+        max-width: 600px;
+        width: 100%;
+        padding-left: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
     a {
         color: #0645ad;
         text-decoration: none;
@@ -55,16 +67,11 @@
         text-decoration: underline;
     }
 
-    ul {
-        max-width: 600px;
-        width: 100%;
-        padding-left: 1.2rem;
-    }
-
   </style>
 </head>
 <body>
   <div class="container">
+    <h1>Louis Volya</h1>
     {poems_html}
   </div>
 </body>
