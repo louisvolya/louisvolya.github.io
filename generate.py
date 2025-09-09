@@ -18,7 +18,7 @@ for filename in os.listdir(POEMS_DIR):
         with open(path, "r", encoding="utf-8") as f:
             lines = f.read().splitlines()
             title = lines[0].replace("Title: ", "")
-            content = "\n".join(lines[3:])  # Skip Title, Author, Tags
+            content = "\n".join(lines[2:])  # Skip Title, Author, Tags
             slug = os.path.splitext(filename)[0]
             poems.append({"title": title, "content": content, "slug": slug})
 
