@@ -56,8 +56,13 @@ for book_dir in sorted(os.listdir(POEMS_DIR)):
                 poem_output_path = os.path.join(book_output_dir, poem_slug)
 
                 # Generate individual poem page
-                poem_html = f"<h1>{title}</h1>\n<pre>{content}</pre>\n"
-                poem_html += f"<p><a href='{book_dir}.html'>← Back to {display_name}</a></p>"
+                poem_html = (
+                    f"<div class='poem'>\n"
+                    f"  <div class='poem-title'>{title}</div>\n"
+                    f"  <div class='poem-content'>{content}</div>\n"
+                    f"</div>\n"
+                    f"<p><a href='{book_dir}.html'>← Back to {display_name}</a></p>"
+                )
 
                 with open(poem_output_path, "w", encoding="utf-8") as pf:
                     pf.write(template.replace("{poems_html}", poem_html))
