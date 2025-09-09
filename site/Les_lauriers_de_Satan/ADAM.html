@@ -8,11 +8,21 @@
     body {
         font-family: Georgia, "Times New Roman", serif;
         line-height: 1.6;
-        max-width: 800px;
-        margin: 2rem auto;
-        padding: 0 1rem;
         background-color: #fefefe;
         color: #111;
+        margin: 0;
+        padding: 2rem 0;
+        display: flex;
+        justify-content: center; /* center horizontally */
+    }
+
+    .container {
+        max-width: 900px;   /* total width of content area */
+        width: 90%;         /* responsive width */
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* center content */
     }
 
     h1, h2 {
@@ -24,6 +34,9 @@
     /* Poem container */
     .poem {
         margin: 1.5rem 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
     /* Title clickable for collapsible effect */
@@ -40,15 +53,20 @@
         color: #0056b3;
     }
 
-    /* Poem content style similar to Wikisource */
+    /* Poem content style */
     .poem-content {
         display: none; /* hidden by default for collapsible effect */
-        padding: 1rem 1.2rem;
+        padding: 1rem 1.5rem;
         border-left: 4px solid #ccc;
         background-color: #fafafa;
         font-family: "Courier New", monospace; /* monospaced like Wikisource */
-        white-space: pre-wrap; /* preserves line breaks */
-        text-align: center; /* center lines as in Wikisource */
+        white-space: pre-wrap; /* preserve line breaks */
+        text-align: center;
+        max-width: 600px;   /* limit line width */
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         margin-bottom: 1rem;
     }
 
@@ -66,17 +84,24 @@
     .folder {
         margin-top: 2rem;
         margin-bottom: 2rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     ul {
         padding-left: 1.2rem;
+        max-width: 600px;  /* limit width of lists */
+        width: 100%;
     }
 
   </style>
 </head>
 <body>
-  <h1>My Poems</h1>
-  <h1>ADAM</h1>
+  <div class="container">
+    <h1>My Poems</h1>
+    <h1>ADAM</h1>
 <pre>« Rappelez-vous ; ces souvenirs sont proches. Vos édens sont éternels. Vous fûtes heureux, régnant sur des empires que l’héritage vous avait prodigués. Les fleurs montaient leur couronne jusque dans les cieux… » 
 
 J’ai mangé les fruits défendus et j’ai mordu dans les poisons avec plus de ferveur que je ne m’étais rassasié de l’orge et du blé. Trop de couleurs et de formes ; j’avais compris la chute d’Adam. Les havres ont la tranquillité fade qui fait mûrir l’aventure. L’on ne m’a chassé de l’existence éternelle : j’en suis parti le sourire en coin.  
@@ -89,6 +114,7 @@ J’ai mangé tous les fruits défendus et mordu dans tous les poisons ; j’a
 
 Et provoquant la Mort, elle m’a ri au nez ! J’ai donc entrepris, pour me lier à elle, de lui raconter toute ma révolte. Voilà l’histoire.</pre>
 <p><a href='Les_lauriers_de_Satan.html'>← Back to Les lauriers de Satan</a></p>
+  </div>
 
   <script>
     document.querySelectorAll('.poem-title').forEach(title => {
