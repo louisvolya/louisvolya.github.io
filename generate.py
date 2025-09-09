@@ -13,7 +13,7 @@ with open(TEMPLATE_FILE, "r", encoding="utf-8") as f:
 poems_html = ""
 
 # Read all poems
-for filename in sorted(os.listdir(POEMS_DIR)):
+for filename in os.listdir(POEMS_DIR):
     if filename.endswith(".txt"):
         path = os.path.join(POEMS_DIR, filename)
         with open(path, "r", encoding="utf-8") as f:
