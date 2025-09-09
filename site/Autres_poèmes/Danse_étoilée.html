@@ -2,16 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ascension</title>
+  <title>My Poems</title>
   <style>
-    body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-    h1 { text-align: center; }
-    .poem-title { cursor: pointer; color: #333; margin: 1rem 0 0.2rem; }
-    .poem-content { display: none; padding: 0.5rem 1rem; background: #f9f9f9; border-left: 4px solid #ccc; white-space: pre-wrap; }
-    .poem-title:hover { color: #007bff; }
+    /* General page layout */
+    body {
+        font-family: Georgia, "Times New Roman", serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        background-color: #fefefe;
+        color: #111;
+    }
+
+    h1, h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: normal;
+    }
+
+    /* Poem container */
+    .poem {
+        margin: 1.5rem 0;
+    }
+
+    /* Title clickable for collapsible effect */
+    .poem-title {
+        cursor: pointer;
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.2rem;
+        margin-bottom: 0.3rem;
+        color: #222;
+    }
+
+    .poem-title:hover {
+        color: #0056b3;
+    }
+
+    /* Poem content style similar to Wikisource */
+    .poem-content {
+        display: none; /* hidden by default for collapsible effect */
+        padding: 1rem 1.2rem;
+        border-left: 4px solid #ccc;
+        background-color: #fafafa;
+        font-family: "Courier New", monospace; /* monospaced like Wikisource */
+        white-space: pre-wrap; /* preserves line breaks */
+        text-align: center; /* center lines as in Wikisource */
+        margin-bottom: 1rem;
+    }
+
+    /* Links */
+    a {
+        color: #0645ad;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Folder/book sections */
+    .folder {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    ul {
+        padding-left: 1.2rem;
+    }
+
   </style>
 </head>
 <body>
+  <h1>My Poems</h1>
   <h1>Danse étoilée</h1>
 <pre>Nos têtes descendront leur regard sur nos âmes
 Un soir que mille nuits feraient pâlir d’argent ;
@@ -31,6 +95,7 @@ Entendu s’exclamer le pardon de Saturne ;
 Qui partit nous maudire avec un air moqueur,
 Faisant rire et danser le bateau de nos cœurs.</pre>
 <p><a href='Autres_poèmes.html'>← Back to Autres poèmes</a></p>
+
   <script>
     document.querySelectorAll('.poem-title').forEach(title => {
       title.addEventListener('click', () => {
@@ -41,4 +106,3 @@ Faisant rire et danser le bateau de nos cœurs.</pre>
   </script>
 </body>
 </html>
-
