@@ -38,9 +38,10 @@ for book_dir in sorted(os.listdir(POEMS_DIR)):
     book_output_dir = os.path.join(OUTPUT_DIR, book_dir)
     os.makedirs(book_output_dir, exist_ok=True)
 
+    # Book page content (list of poems)
     book_content = f"<h1>{display_name}</h1>\n<ul>\n"
 
-    # For each poem in the book
+    # Process each poem in the book
     for filename in sorted(os.listdir(book_path)):
         if filename.endswith(".txt"):
             poem_file_path = os.path.join(book_path, filename)
@@ -51,16 +52,14 @@ for book_dir in sorted(os.listdir(POEMS_DIR)):
                 title = lines[0].replace("Title: ", "").strip()
                 content = "\n".join(lines[2:]).strip()  # skip title + blank line
 
-                # Create a safe poem filename inside the book folder
+                # Poem page filename inside the book folder
                 poem_slug = f"{os.path.splitext(filename)[0]}.html"
                 poem_output_path = os.path.join(book_output_dir, poem_slug)
 
-                # Generate individual poem page
+                # Generate individual poem page (centered title, left-aligned text)
                 poem_html = (
-                    f"<div class='poem'>\n"
-                    f"  <div class='poem-title'>{title}</div>\n"
-                    f"  <div class='poem-content'>{content}</div>\n"
-                    f"</div>\n"
+                    f"<h1>{title}</h1>\n"
+                    f"<div class='poem-box'>{content}</div>\n"
                     f"<p><a href='{book_dir}.html'>← Back to {display_name}</a></p>"
                 )
 
@@ -73,7 +72,7 @@ for book_dir in sorted(os.listdir(POEMS_DIR)):
     book_content += "</ul>\n"
     book_content += "<p><a href='../index.html'>← Back to main page</a></p>"
 
-    # Generate book page inside the book folder
+    # Generate the book page
     book_page_path = os.path.join(book_output_dir, f"{book_dir}.html")
     with open(book_page_path, "w", encoding="utf-8") as f:
         f.write(template.replace("{poems_html}", book_content))

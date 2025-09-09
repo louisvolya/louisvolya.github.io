@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Poems</title>
+  <title>Ascension</title>
   <style>
-    /* General page layout */
     body {
         font-family: Georgia, "Times New Roman", serif;
         line-height: 1.6;
@@ -13,16 +12,16 @@
         margin: 0;
         padding: 2rem 0;
         display: flex;
-        justify-content: center; /* center horizontally */
+        justify-content: center;
     }
 
     .container {
-        max-width: 900px;   /* total width of content area */
-        width: 90%;         /* responsive width */
+        max-width: 900px;
+        width: 90%;
         padding: 0 1rem;
         display: flex;
         flex-direction: column;
-        align-items: center; /* center content */
+        align-items: center;
     }
 
     h1, h2 {
@@ -31,43 +30,19 @@
         font-weight: normal;
     }
 
-    /* Poem container */
-    .poem {
-        margin: 1.5rem 0;
+    /* Poem box */
+    .poem-box {
+        max-width: 600px;
         width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    /* Title clickable for collapsible effect */
-    .poem-title {
-        cursor: pointer;
-        font-weight: bold;
-        text-align: center;
-        font-size: 1.2rem;
-        margin-bottom: 0.3rem;
-        color: #222;
-    }
-
-    .poem-title:hover {
-        color: #0056b3;
-    }
-
-    /* Poem content style */
-    .poem-content {
-        display: none; /* hidden by default for collapsible effect */
+        background-color: #fafafa;
         padding: 1rem 1.5rem;
         border-left: 4px solid #ccc;
-        background-color: #fafafa;
-        font-family: "Courier New", monospace; /* monospaced like Wikisource */
-        white-space: pre-wrap; /* preserve line breaks */
-        text-align: center;
-        max-width: 600px;   /* limit line width */
-        width: 100%;
-        box-sizing: border-box;
         border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         margin-bottom: 1rem;
+        white-space: normal;       /* allow line wrapping */
+        text-align: left;          /* left-aligned text */
+        font-family: "Courier New", monospace;
     }
 
     /* Links */
@@ -80,41 +55,21 @@
         text-decoration: underline;
     }
 
-    /* Folder/book sections */
-    .folder {
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
     ul {
-        padding-left: 1.2rem;
-        max-width: 600px;  /* limit width of lists */
+        max-width: 600px;
         width: 100%;
+        padding-left: 1.2rem;
     }
 
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>My Poems</h1>
     <h1>Autres poèmes</h1>
 <ul>
 <li><a href='Danse_étoilée.html'>Danse étoilée</a></li>
 </ul>
 <p><a href='../index.html'>← Back to main page</a></p>
   </div>
-
-  <script>
-    document.querySelectorAll('.poem-title').forEach(title => {
-      title.addEventListener('click', () => {
-        const content = title.nextElementSibling;
-        content.style.display = content.style.display === 'block' ? 'none' : 'block';
-      });
-    });
-  </script>
 </body>
 </html>
