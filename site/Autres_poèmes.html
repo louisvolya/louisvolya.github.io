@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ascension</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { text-align: center; }
+    .poem-title { cursor: pointer; color: #333; margin: 1rem 0 0.2rem; }
+    .poem-content { display: none; padding: 0.5rem 1rem; background: #f9f9f9; border-left: 4px solid #ccc; white-space: pre-wrap; }
+    .poem-title:hover { color: #007bff; }
+  </style>
+</head>
+<body>
+  <h1>Autres poèmes</h1>
+<div class='poem'>
+  <div class='poem-title'>Danse étoilée</div>
+  <div class='poem-content'>Nos têtes descendront leur regard sur nos âmes
+Un soir que mille nuits feraient pâlir d’argent ;
+Tu seras - Lune Blanche, - avec l’or et le vent,
+Dans l’ombre éblouissante où les Anges s’acclament.  
+
+J’aurai le souvenir des feux de Notre-Dame
+Dans mes yeux ; Et la rouge enchanteresse, avant 
+L’éclipse de ton œil rose et clair et dormant,
+Dessinera nos doigts enlacés dans les flammes.
+
+Nous cueillerons les fleurs de la butte aux Soleils
+Quand Minuit sonnera. Nos sourires nocturnes
+Et les rayons d’Aurore auront à leur réveil
+
+Entendu s’exclamer le pardon de Saturne ;
+Qui partit nous maudire avec un air moqueur,
+Faisant rire et danser le bateau de nos cœurs.</div>
+</div>
+<p><a href='index.html'>← Back to main page</a></p>
+  <script>
+    document.querySelectorAll('.poem-title').forEach(title => {
+      title.addEventListener('click', () => {
+        const content = title.nextElementSibling;
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  </script>
+</body>
+</html>
+
