@@ -36,6 +36,16 @@ def build_nav(files, idx, base_path):
     return f"<div class='nav-buttons' style='display:flex;justify-content:space-between;width:100%;max-width:600px;margin-top:1rem;'>{prev_html}{next_html}</div>"
 
 
+def poem_sort_key(filename: str) -> int:
+    """Extract leading number before '_' in filename for numeric sorting."""
+    base = os.path.splitext(filename)[0]
+    if "_" in base:
+        prefix = base.split("_", 1)[0]
+        if prefix.isdigit():
+            return int(prefix)
+    return float("inf")  # files without number go last
+
+
 # --- 1) Generate homepage (books) ---
 homepage_content = "<h1>Books</h1>\n<ul>\n"
 
@@ -77,8 +87,9 @@ for book in sorted(os.listdir(POEMS_DIR)):
             poems.append(item)
 
     # --- Generate poem pages (direct poems in book, no chapters) ---
+    poems = sorted(poems, key=poem_sort_key)
     poem_links = []
-    for i, filename in enumerate(sorted(poems)):
+    for i, filename in enumerate(poems):
         poem_path = os.path.join(book_path, filename)
         with open(poem_path, "r", encoding="utf-8") as f:
             raw_content = f.read().strip()
@@ -94,7 +105,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
         poem_file_path = os.path.join(book_output_dir, poem_file_name)
 
         # Prev/Next buttons
-        nav_html = build_nav(sorted(poems), i, book_path)
+        nav_html = build_nav(poems, i, book_path)
 
         # Link back to the book page
         poem_html = (
@@ -117,7 +128,8 @@ for book in sorted(os.listdir(POEMS_DIR)):
         os.makedirs(chapter_output_dir, exist_ok=True)
 
         chapter_display_name = chapter.replace("_", " ")
-        chapter_poems = [f for f in sorted(os.listdir(chapter_path)) if f.endswith(".txt")]
+        chapter_poems = [f for f in os.listdir(chapter_path) if f.endswith(".txt")]
+        chapter_poems = sorted(chapter_poems, key=poem_sort_key)
 
         chapter_poem_links = []
         for i, filename in enumerate(chapter_poems):
