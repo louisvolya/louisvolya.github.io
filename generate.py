@@ -16,6 +16,26 @@ def wrap(content: str) -> str:
     return template.replace("{poems_html}", content)
 
 
+def build_nav(files, idx, base_path):
+    """Build navigation bar with prev on left, next on right."""
+    prev_html = "<span></span>"
+    next_html = "<span></span>"
+
+    if idx > 0:
+        prev_title_line = open(os.path.join(base_path, files[idx-1]), encoding="utf-8").read().splitlines()[0]
+        prev_title = prev_title_line.replace("Title: ", "").strip()
+        prev_file = f"{os.path.splitext(files[idx-1])[0]}.html"
+        prev_html = f"<a href='{prev_file}'>&larr; {prev_title}</a>"
+
+    if idx < len(files) - 1:
+        next_title_line = open(os.path.join(base_path, files[idx+1]), encoding="utf-8").read().splitlines()[0]
+        next_title = next_title_line.replace("Title: ", "").strip()
+        next_file = f"{os.path.splitext(files[idx+1])[0]}.html"
+        next_html = f"<a href='{next_file}'>{next_title} &rarr;</a>"
+
+    return f"<div class='nav-buttons' style='display:flex;justify-content:space-between;width:100%;max-width:600px;margin-top:1rem;'>{prev_html}{next_html}</div>"
+
+
 # --- 1) Generate homepage (books) ---
 homepage_content = "<h1>Books</h1>\n<ul>\n"
 
@@ -73,21 +93,8 @@ for book in sorted(os.listdir(POEMS_DIR)):
         poem_file_name = f"{os.path.splitext(filename)[0]}.html"
         poem_file_path = os.path.join(book_output_dir, poem_file_name)
 
-        # Prev/Next links
-        nav_parts = []
-        if i > 0:
-            prev_title_line = open(os.path.join(book_path, sorted(poems)[i-1]), encoding="utf-8").read().splitlines()[0]
-            prev_title = prev_title_line.replace("Title: ", "").strip()
-            prev_file = f"{os.path.splitext(sorted(poems)[i-1])[0]}.html"
-            nav_parts.append(f"<a href='{prev_file}'>&larr; {prev_title}</a>")
-        if i < len(poems) - 1:
-            next_title_line = open(os.path.join(book_path, sorted(poems)[i+1]), encoding="utf-8").read().splitlines()[0]
-            next_title = next_title_line.replace("Title: ", "").strip()
-            next_file = f"{os.path.splitext(sorted(poems)[i+1])[0]}.html"
-            nav_parts.append(f"<a href='{next_file}'>{next_title} &rarr;</a>")
-        nav_html = ""
-        if nav_parts:
-            nav_html = "<div class='nav-buttons'>" + "".join(nav_parts) + "</div>"
+        # Prev/Next buttons (always left/right)
+        nav_html = build_nav(sorted(poems), i, book_path)
 
         poem_html = (
             f"<h2>{title}</h2>\n"
@@ -127,21 +134,8 @@ for book in sorted(os.listdir(POEMS_DIR)):
             poem_file_name = f"{os.path.splitext(filename)[0]}.html"
             poem_file_path = os.path.join(chapter_output_dir, poem_file_name)
 
-            # Prev/Next links
-            nav_parts = []
-            if i > 0:
-                prev_title_line = open(os.path.join(chapter_path, chapter_poems[i-1]), encoding="utf-8").read().splitlines()[0]
-                prev_title = prev_title_line.replace("Title: ", "").strip()
-                prev_file = f"{os.path.splitext(chapter_poems[i-1])[0]}.html"
-                nav_parts.append(f"<a href='{prev_file}'>&larr; {prev_title}</a>")
-            if i < len(chapter_poems) - 1:
-                next_title_line = open(os.path.join(chapter_path, chapter_poems[i+1]), encoding="utf-8").read().splitlines()[0]
-                next_title = next_title_line.replace("Title: ", "").strip()
-                next_file = f"{os.path.splitext(chapter_poems[i+1])[0]}.html"
-                nav_parts.append(f"<a href='{next_file}'>{next_title} &rarr;</a>")
-            nav_html = ""
-            if nav_parts:
-                nav_html = "<div class='nav-buttons'>" + "".join(nav_parts) + "</div>"
+            # Prev/Next buttons (always left/right)
+            nav_html = build_nav(chapter_poems, i, chapter_path)
 
             poem_html = (
                 f"<h2>{title}</h2>\n"
