@@ -37,13 +37,13 @@ def build_nav(files, idx, base_path):
 
 
 def poem_sort_key(filename: str) -> int:
-    """Extract leading number before '_' in filename for numeric sorting."""
+    """Extract leading number before '_' in filename for numeric sorting. Treat 0 as first."""
     base = os.path.splitext(filename)[0]
     if "_" in base:
         prefix = base.split("_", 1)[0]
         if prefix.isdigit():
             return int(prefix)
-    return float("inf")  # files without number go last
+    return -1  # files without number go first
 
 
 # --- 1) Generate homepage (books) ---
