@@ -93,9 +93,10 @@ for book in sorted(os.listdir(POEMS_DIR)):
         poem_file_name = f"{os.path.splitext(filename)[0]}.html"
         poem_file_path = os.path.join(book_output_dir, poem_file_name)
 
-        # Prev/Next buttons (always left/right)
+        # Prev/Next buttons
         nav_html = build_nav(sorted(poems), i, book_path)
 
+        # Link back to the book page
         poem_html = (
             f"<h2>{title}</h2>\n"
             f"<div class='poem-box'>{content}</div>\n"
@@ -134,15 +135,15 @@ for book in sorted(os.listdir(POEMS_DIR)):
             poem_file_name = f"{os.path.splitext(filename)[0]}.html"
             poem_file_path = os.path.join(chapter_output_dir, poem_file_name)
 
-            # Prev/Next buttons (always left/right)
+            # Prev/Next buttons
             nav_html = build_nav(chapter_poems, i, chapter_path)
 
-            # back to book, not "menu principal"
+            # Link back to chapter page
             poem_html = (
                 f"<h2>{title}</h2>\n"
                 f"<div class='poem-box'>{content}</div>\n"
                 f"{nav_html}\n"
-                f"<p><a href='../{book}.html'>← {book_display_name}</a></p>"
+                f"<p><a href='{chapter}.html'>← {chapter_display_name}</a></p>"
             )
 
             with open(poem_file_path, "w", encoding="utf-8") as f:
@@ -150,11 +151,11 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
             chapter_poem_links.append((title, poem_file_name))
 
-        # Chapter main page → links to root menu
+        # Chapter main page → link back to root menu
         chapter_page_html = f"<h1>{chapter_display_name}</h1>\n<ul>\n"
         for title, link in chapter_poem_links:
             chapter_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
-        chapter_page_html += f"</ul>\n<p><a href='../../index.html'>← Menu principal</a></p>"
+        chapter_page_html += f"</ul>\n<p><a href='../../../index.html'>← Menu principal</a></p>"
 
         with open(os.path.join(chapter_output_dir, f"{chapter}.html"), "w", encoding="utf-8") as f:
             f.write(wrap(chapter_page_html))
@@ -167,8 +168,8 @@ for book in sorted(os.listdir(POEMS_DIR)):
         book_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
     for chapter_name, link in chapter_links:
         book_page_html += f"<li><a href='{link}'>{chapter_name}</a></li>\n"
-    # book page → link to root menu
-    book_page_html += "</ul>\n<p><a href='../index.html'>← Menu principal</a></p>"
+    # book main page → link back to root menu
+    book_page_html += "</ul>\n<p><a href='../../index.html'>← Menu principal</a></p>"
 
     with open(os.path.join(book_output_dir, f"{book}.html"), "w", encoding="utf-8") as f:
         f.write(wrap(book_page_html))
