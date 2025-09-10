@@ -74,22 +74,26 @@ for book in sorted(os.listdir(POEMS_DIR)):
         poem_file_path = os.path.join(book_output_dir, poem_file_name)
 
         # Prev/Next links
-        nav_html = "<div class='nav-buttons'>"
+        nav_parts = []
         if i > 0:
+            prev_title_line = open(os.path.join(book_path, sorted(poems)[i-1]), encoding="utf-8").read().splitlines()[0]
+            prev_title = prev_title_line.replace("Title: ", "").strip()
             prev_file = f"{os.path.splitext(sorted(poems)[i-1])[0]}.html"
-            nav_html += f"<a href='{prev_file}'>&larr; Previous</a>"
-        else:
-            nav_html += "<span></span>"
+            nav_parts.append(f"<a href='{prev_file}'>&larr; {prev_title}</a>")
         if i < len(poems) - 1:
+            next_title_line = open(os.path.join(book_path, sorted(poems)[i+1]), encoding="utf-8").read().splitlines()[0]
+            next_title = next_title_line.replace("Title: ", "").strip()
             next_file = f"{os.path.splitext(sorted(poems)[i+1])[0]}.html"
-            nav_html += f"<a href='{next_file}'>Next &rarr;</a>"
-        nav_html += "</div>"
+            nav_parts.append(f"<a href='{next_file}'>{next_title} &rarr;</a>")
+        nav_html = ""
+        if nav_parts:
+            nav_html = "<div class='nav-buttons'>" + "".join(nav_parts) + "</div>"
 
         poem_html = (
             f"<h2>{title}</h2>\n"
             f"<div class='poem-box'>{content}</div>\n"
             f"{nav_html}\n"
-            f"<p><a href='{book}.html'>← {book_display_name}</a></p>"
+            f"<p><a href='../index.html'>← Menu principal</a></p>"
         )
 
         with open(poem_file_path, "w", encoding="utf-8") as f:
@@ -124,22 +128,26 @@ for book in sorted(os.listdir(POEMS_DIR)):
             poem_file_path = os.path.join(chapter_output_dir, poem_file_name)
 
             # Prev/Next links
-            nav_html = "<div class='nav-buttons'>"
+            nav_parts = []
             if i > 0:
+                prev_title_line = open(os.path.join(chapter_path, chapter_poems[i-1]), encoding="utf-8").read().splitlines()[0]
+                prev_title = prev_title_line.replace("Title: ", "").strip()
                 prev_file = f"{os.path.splitext(chapter_poems[i-1])[0]}.html"
-                nav_html += f"<a href='{prev_file}'>&larr; Previous</a>"
-            else:
-                nav_html += "<span></span>"
+                nav_parts.append(f"<a href='{prev_file}'>&larr; {prev_title}</a>")
             if i < len(chapter_poems) - 1:
+                next_title_line = open(os.path.join(chapter_path, chapter_poems[i+1]), encoding="utf-8").read().splitlines()[0]
+                next_title = next_title_line.replace("Title: ", "").strip()
                 next_file = f"{os.path.splitext(chapter_poems[i+1])[0]}.html"
-                nav_html += f"<a href='{next_file}'>Next &rarr;</a>"
-            nav_html += "</div>"
+                nav_parts.append(f"<a href='{next_file}'>{next_title} &rarr;</a>")
+            nav_html = ""
+            if nav_parts:
+                nav_html = "<div class='nav-buttons'>" + "".join(nav_parts) + "</div>"
 
             poem_html = (
                 f"<h2>{title}</h2>\n"
                 f"<div class='poem-box'>{content}</div>\n"
                 f"{nav_html}\n"
-                f"<p><a href='../{book}.html'>← {book_display_name}</a></p>"
+                f"<p><a href='../../index.html'>← Menu principal</a></p>"
             )
 
             with open(poem_file_path, "w", encoding="utf-8") as f:
@@ -151,7 +159,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
         chapter_page_html = f"<h1>{chapter_display_name}</h1>\n<ul>\n"
         for title, link in chapter_poem_links:
             chapter_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
-        chapter_page_html += f"</ul>\n<p><a href='../{book}.html'>← {book_display_name}</a></p>"
+        chapter_page_html += f"</ul>\n<p><a href='../index.html'>← Menu principal</a></p>"
 
         with open(os.path.join(chapter_output_dir, f"{chapter}.html"), "w", encoding="utf-8") as f:
             f.write(wrap(chapter_page_html))
