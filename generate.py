@@ -47,7 +47,7 @@ def poem_sort_key(filename: str) -> int:
 
 
 # --- 1) Generate homepage (books) ---
-homepage_content = "<h1>Books</h1>\n<ul>\n"
+homepage_content = "<h1>Œuvres</h1>\n<ul>\n"
 
 for book in sorted(os.listdir(POEMS_DIR)):
     book_path = os.path.join(POEMS_DIR, book)
