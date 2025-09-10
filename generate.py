@@ -10,26 +10,32 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 with open(TEMPLATE_FILE, "r", encoding="utf-8") as f:
     template = f.read()
 
-# --- 1) Generate homepage ---
-homepage_content = "<ul>\n"
+
+def wrap(content: str) -> str:
+    """Insert content into template."""
+    return template.replace("{poems_html}", content)
+
+
+# --- 1) Generate homepage (books) ---
+homepage_content = "<h1>Books</h1>\n<ul>\n"
 
 for book in sorted(os.listdir(POEMS_DIR)):
     book_path = os.path.join(POEMS_DIR, book)
     if not os.path.isdir(book_path):
         continue
     display_name = book.replace("_", " ")
-    # link to the book's main page inside its folder
-    book_index = f"{book}/{book}.html"
+    book_index = f"site/{book}/{book}.html"
     homepage_content += f"<li><a href='{book_index}'>{display_name}</a></li>\n"
 
 homepage_content += "</ul>\n"
 
-with open(os.path.join(OUTPUT_DIR, "index.html"), "w", encoding="utf-8") as f:
-    f.write(template.replace("{poems_html}", homepage_content))
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(wrap(homepage_content))
 
 print("Generated homepage with book links.")
 
-# --- 2) Generate book pages and poem pages ---
+
+# --- 2) Generate book pages, chapter pages, and poem pages ---
 for book in sorted(os.listdir(POEMS_DIR)):
     book_path = os.path.join(POEMS_DIR, book)
     if not os.path.isdir(book_path):
@@ -39,50 +45,128 @@ for book in sorted(os.listdir(POEMS_DIR)):
     book_output_dir = os.path.join(OUTPUT_DIR, book)
     os.makedirs(book_output_dir, exist_ok=True)
 
-    poem_links = []
+    chapters = []
+    poems = []
 
-    # Each book contains one or more poem txt files
-    for filename in sorted(os.listdir(book_path)):
-        if filename.endswith(".txt"):
-            poem_path = os.path.join(book_path, filename)
+    # Classify contents: chapters or poems
+    for item in sorted(os.listdir(book_path)):
+        item_path = os.path.join(book_path, item)
+        if os.path.isdir(item_path):
+            chapters.append(item)
+        elif item.endswith(".txt"):
+            poems.append(item)
+
+    # --- Generate poem pages (direct poems in book, no chapters) ---
+    poem_links = []
+    for i, filename in enumerate(sorted(poems)):
+        poem_path = os.path.join(book_path, filename)
+        with open(poem_path, "r", encoding="utf-8") as f:
+            raw_content = f.read().strip()
+
+        lines = raw_content.splitlines()
+        if not lines:
+            continue
+
+        title = lines[0].replace("Title: ", "").strip()
+        content = "\n".join(lines[2:]).strip()
+
+        poem_file_name = f"{os.path.splitext(filename)[0]}.html"
+        poem_file_path = os.path.join(book_output_dir, poem_file_name)
+
+        # Prev/Next links
+        nav_html = "<div class='nav-buttons'>"
+        if i > 0:
+            prev_file = f"{os.path.splitext(sorted(poems)[i-1])[0]}.html"
+            nav_html += f"<a href='{prev_file}'>&larr; Previous</a>"
+        else:
+            nav_html += "<span></span>"
+        if i < len(poems) - 1:
+            next_file = f"{os.path.splitext(sorted(poems)[i+1])[0]}.html"
+            nav_html += f"<a href='{next_file}'>Next &rarr;</a>"
+        nav_html += "</div>"
+
+        poem_html = (
+            f"<h2>{title}</h2>\n"
+            f"<div class='poem-box'>{content}</div>\n"
+            f"{nav_html}\n"
+            f"<p><a href='{book}.html'>← {book_display_name}</a></p>"
+        )
+
+        with open(poem_file_path, "w", encoding="utf-8") as f:
+            f.write(wrap(poem_html))
+
+        poem_links.append((title, poem_file_name))
+
+    # --- Generate chapter pages ---
+    chapter_links = []
+    for chapter in sorted(chapters):
+        chapter_path = os.path.join(book_path, chapter)
+        chapter_output_dir = os.path.join(book_output_dir, chapter)
+        os.makedirs(chapter_output_dir, exist_ok=True)
+
+        chapter_display_name = chapter.replace("_", " ")
+        chapter_poems = [f for f in sorted(os.listdir(chapter_path)) if f.endswith(".txt")]
+
+        chapter_poem_links = []
+        for i, filename in enumerate(chapter_poems):
+            poem_path = os.path.join(chapter_path, filename)
             with open(poem_path, "r", encoding="utf-8") as f:
                 raw_content = f.read().strip()
 
-            # Extract lines
             lines = raw_content.splitlines()
             if not lines:
                 continue
 
-            # First line = title
             title = lines[0].replace("Title: ", "").strip()
-
-            # Poem content = skip first 2 lines (title + blank line)
             content = "\n".join(lines[2:]).strip()
 
-            # Poem page filename
             poem_file_name = f"{os.path.splitext(filename)[0]}.html"
-            poem_file_path = os.path.join(book_output_dir, poem_file_name)
+            poem_file_path = os.path.join(chapter_output_dir, poem_file_name)
 
-            # Generate individual poem page
+            # Prev/Next links
+            nav_html = "<div class='nav-buttons'>"
+            if i > 0:
+                prev_file = f"{os.path.splitext(chapter_poems[i-1])[0]}.html"
+                nav_html += f"<a href='{prev_file}'>&larr; Previous</a>"
+            else:
+                nav_html += "<span></span>"
+            if i < len(chapter_poems) - 1:
+                next_file = f"{os.path.splitext(chapter_poems[i+1])[0]}.html"
+                nav_html += f"<a href='{next_file}'>Next &rarr;</a>"
+            nav_html += "</div>"
+
             poem_html = (
                 f"<h2>{title}</h2>\n"
                 f"<div class='poem-box'>{content}</div>\n"
-                f"<p><a href='{book}.html'>← {book_display_name}</a></p>"
+                f"{nav_html}\n"
+                f"<p><a href='../{book}.html'>← {book_display_name}</a></p>"
             )
 
             with open(poem_file_path, "w", encoding="utf-8") as f:
-                f.write(template.replace("{poems_html}", poem_html))
+                f.write(wrap(poem_html))
 
-            poem_links.append((title, poem_file_name))
+            chapter_poem_links.append((title, poem_file_name))
 
-    # Generate main book page listing poems
+        # Chapter main page
+        chapter_page_html = f"<h1>{chapter_display_name}</h1>\n<ul>\n"
+        for title, link in chapter_poem_links:
+            chapter_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
+        chapter_page_html += f"</ul>\n<p><a href='../{book}.html'>← {book_display_name}</a></p>"
+
+        with open(os.path.join(chapter_output_dir, f"{chapter}.html"), "w", encoding="utf-8") as f:
+            f.write(wrap(chapter_page_html))
+
+        chapter_links.append((chapter_display_name, f"{chapter}/{chapter}.html"))
+
+    # --- Generate book main page ---
     book_page_html = f"<h1>{book_display_name}</h1>\n<ul>\n"
     for title, link in poem_links:
         book_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
+    for chapter_name, link in chapter_links:
+        book_page_html += f"<li><a href='{link}'>{chapter_name}</a></li>\n"
     book_page_html += "</ul>\n<p><a href='../index.html'>← Menu principal</a></p>"
 
-    book_page_file = os.path.join(book_output_dir, f"{book}.html")
-    with open(book_page_file, "w", encoding="utf-8") as f:
-        f.write(template.replace("{poems_html}", book_page_html))
+    with open(os.path.join(book_output_dir, f"{book}.html"), "w", encoding="utf-8") as f:
+        f.write(wrap(book_page_html))
 
-    print(f"Generated book '{book}' and its poem page(s).")
+    print(f"Generated book '{book}' with chapters and poems.")
