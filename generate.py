@@ -187,5 +187,3 @@ for book in sorted(os.listdir(POEMS_DIR)):
         f.write(wrap(book_page_html))
 
     print(f"Generated book '{book}' with chapters and poems.")
-    
-    #tototata
