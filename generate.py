@@ -6,7 +6,6 @@ TEMPLATE_FILE = "templates/index_skeleton.html"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Load the HTML template
 with open(TEMPLATE_FILE, "r", encoding="utf-8") as f:
     template = f.read()
 
@@ -43,10 +42,9 @@ def poem_sort_key(filename: str) -> int:
         prefix = base.split("_", 1)[0]
         if prefix.isdigit():
             return int(prefix)
-    return -1  # files without number go first
+    return -1  
 
 
-# --- 1) Generate homepage (books) ---
 homepage_content = "<h1>Œuvres</h1>\n<ul>\n"
 
 for book in sorted(os.listdir(POEMS_DIR)):
@@ -65,7 +63,6 @@ with open("index.html", "w", encoding="utf-8") as f:
 print("Generated homepage with book links.")
 
 
-# --- 2) Generate book pages, chapter pages, and poem pages ---
 for book in sorted(os.listdir(POEMS_DIR)):
     book_path = os.path.join(POEMS_DIR, book)
     if not os.path.isdir(book_path):
@@ -78,7 +75,6 @@ for book in sorted(os.listdir(POEMS_DIR)):
     chapters = []
     poems = []
 
-    # Classify contents: chapters or poems
     for item in sorted(os.listdir(book_path)):
         item_path = os.path.join(book_path, item)
         if os.path.isdir(item_path):
@@ -86,7 +82,6 @@ for book in sorted(os.listdir(POEMS_DIR)):
         elif item.endswith(".txt"):
             poems.append(item)
 
-    # --- Generate poem pages (direct poems in book, no chapters) ---
     poems = sorted(poems, key=poem_sort_key)
     poem_links = []
     for i, filename in enumerate(poems):
@@ -104,10 +99,8 @@ for book in sorted(os.listdir(POEMS_DIR)):
         poem_file_name = f"{os.path.splitext(filename)[0]}.html"
         poem_file_path = os.path.join(book_output_dir, poem_file_name)
 
-        # Prev/Next buttons
         nav_html = build_nav(poems, i, book_path)
 
-        # Link back to the book page
         poem_html = (
             f"<h2>{title}</h2>\n"
             f"<div class='poem-box'>{content}</div>\n"
@@ -120,7 +113,6 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
         poem_links.append((title, poem_file_name))
 
-    # --- Generate chapter pages ---
     chapter_links = []
     for chapter in sorted(chapters):
         chapter_path = os.path.join(book_path, chapter)
@@ -147,10 +139,8 @@ for book in sorted(os.listdir(POEMS_DIR)):
             poem_file_name = f"{os.path.splitext(filename)[0]}.html"
             poem_file_path = os.path.join(chapter_output_dir, poem_file_name)
 
-            # Prev/Next buttons
             nav_html = build_nav(chapter_poems, i, chapter_path)
 
-            # Link back to chapter page
             poem_html = (
                 f"<h2>{title}</h2>\n"
                 f"<div class='poem-box'>{content}</div>\n"
@@ -163,7 +153,6 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
             chapter_poem_links.append((title, poem_file_name))
 
-        # Chapter main page → link back to root menu
         chapter_page_html = f"<h1>{chapter_display_name}</h1>\n<ul>\n"
         for title, link in chapter_poem_links:
             chapter_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
@@ -174,13 +163,11 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
         chapter_links.append((chapter_display_name, f"{chapter}/{chapter}.html"))
 
-    # --- Generate book main page ---
     book_page_html = f"<h1>{book_display_name}</h1>\n<ul>\n"
     for title, link in poem_links:
         book_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
     for chapter_name, link in chapter_links:
         book_page_html += f"<li><a href='{link}'>{chapter_name}</a></li>\n"
-    # book main page → link back to root menu
     book_page_html += "</ul>\n<p><a href='../../index.html'>← Menu principal</a></p>"
 
     with open(os.path.join(book_output_dir, f"{book}.html"), "w", encoding="utf-8") as f:
