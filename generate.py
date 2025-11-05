@@ -158,8 +158,12 @@ for book in sorted(os.listdir(POEMS_DIR)):
         nav_html = build_nav(poems, i, book_path)
 
         # Decide back link
-        back_link = "index.html" if len(poems) == 1 and not chapters else f"{book}.html"
-        back_text = "Menu principal" if back_link == "index.html" else book_display_name
+        if len(poems) == 1 and not chapters:
+            back_link = "../index.html"
+            back_text = "Menu principal"
+        else:
+            back_link = f"{book}.html"
+            back_text = book_display_name
 
         poem_html = (
             f"<h2>{title}</h2>\n"

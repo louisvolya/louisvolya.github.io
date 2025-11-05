@@ -1,154 +1,115 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <style>
-    body {
-        font-family: Georgia, "Times New Roman", serif;
-        line-height: 1.6;
-        background-color: #fefefe;
-        color: #111;
-        margin: 0;
-        padding: 2rem 0;
-        display: flex;
-        justify-content: center;
-    }
+<style>
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+    background-color: #fefefe;
+    color: #111;
+    margin: 0;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
 
-    .container {
-        max-width: 900px;
-        width: 90%;
-        padding: 0 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.container {
+    max-width: 900px;
+    width: 90%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: normal;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+.poem-box {
+    max-width: 600px;
+    width: 100%;
+    background-color: #fafafa;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+    white-space: pre-wrap;
+    text-align: left;
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.1em;
+}
+
+/* --- Theater-specific styles --- */
+.poem-box.theatre {
+    font-size: 1.05em;           /* slightly smaller for long text */
+    line-height: 1.5;
+}
+
+.act, .scene {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin: 1.5rem 0;
+}
+
+.didascaly {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    margin: 0.5rem 0;
+}
+
+.dialogue-name {
+    font-weight: bold;
+}
+
+ul {
+    max-width: 600px;
+    width: 100%;
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+a {
+    color: #0645ad;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    .poem-box, ul {
+        width: 95%;
+    }
     h1 {
-        text-align: center;
-        font-weight: bold;
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 2rem;
     }
-
     h2 {
-        text-align: center;
-        margin-bottom: 1rem;
-        font-weight: normal;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 1.5rem;
     }
-
-    .poem-box {
-        max-width: 600px;
-        width: 100%;
-        background-color: #fafafa;
-        padding: 1rem 1.5rem;
-        border-left: 4px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 1.5rem;
-        white-space: pre-wrap;
-        text-align: left;
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em;
-    }
-
-    ul {
-        max-width: 600px;
-        width: 100%;
-        padding-left: 1.2rem;
-        margin-bottom: 2rem;
-    }
-
-    a {
-        color: #0645ad;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    .nav-buttons {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 600px;
-        margin-top: 1rem;
-    }
-
-    /* === Theatre-specific formatting === */
     .poem-box.theatre {
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em; /* same as base */
-        text-align: left;
+        font-size: 1em;
     }
-
-    .poem-box.theatre .act,
-    .poem-box.theatre .scene {
-        display: block;
-        text-align: center;
-        font-weight: bold;
-        margin: 2rem 0 1rem 0;
-        font-size: 1.15em;
-        letter-spacing: 0.5px;
-    }
-
-    .poem-box.theatre .didascaly {
-        display: block;
-        text-align: center;
-        font-style: italic;
-        margin: 1rem 0;
-        color: #444;
-    }
-
-    .poem-box.theatre .dialogue-name {
-        font-weight: bold;
-    }
-
-    @media (max-width: 600px) {
-        h1 {
-            font-size: 2rem;
-        }
-        h2 {
-            font-size: 1.5rem;
-        }
-        .poem-box, .poem-box.theatre {
-            font-size: 1em;
-        }
-    }
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Voix</h2>
-<div class='poem-box'>‎ 	Au lendemain de la Maladie, les étoiles dormaient à la belle étoile.
-
-	À la paille sanglante des poulaillers les renards offraient quelques dormeuses – ô la paix… – plumées ; déplumées.
-
-	Le Soir commença – la Lune parle – ; – et crache son venin sur les versants d’ombre.
-
-	Étrange origine : « Nous scintillerons ! Dans les mers de rubis, que les joaillers auront polies en soufflant, en soufflant, – en soufflant, et c’est le souffle de viande où les vogueurs sont repus – et c’est tout. » Elle criait depuis l’Avant. Spectacle !
-
-	Les déserts allaient, sifflotant, de l’oasis au chameau, sifflotant, entre les pas des Touaregs – chuchotant – ; Ciels de dunes – Ô Célestes Ascensions ! – depuis les tours d’Everest – qui sont surplombées de lampes et d’alchimie.
-
-	Les navires de neige flottaient mille nœuds dans la descente prophétique : « Canons ! Feu ! » Chaque boulet se traîna dans le sillage d’un perroquet gouailleur.
-
-	Suivant le bateau macabre – que l’on nomme Destinée, par hommage – qui menait gaillardement la flotte blanche, le gouvernail monté sur le ponton de sang reluisit aux vallées voisines.
-
-	Alors le cerf qui pleurait dans le bois ne cessa pas, pourtant épaulé de l’ours et du poisson – ô reflet du Miel… La ruche en soleil appareilla dans les cimes et s’attacha au bout de la proue. Un faucon borgne roulait d’immenses cercles sur les auréoles animales.
-
-	La carotte extirpa ses petites pattes de terre et sauta – non sans rire – dans le panier d’oseille. La chaumière prit de nouveau une bouffée de son cigare.
-
-	Tandis que la trotteuse devançait l’engrenage, un enfant jeta sa bille dans un trou de terre : puis une fleur en sortit ! Ses yeux se jetaient déjà dans le trésor des âmes.
-
-	Les rames à bâbord saluèrent l’innommable pagaille de la guerre de sable – et toujours en avant. Un enfant jouait entre ses doigts avec la Torpille de Flammes. La vague ; elle frôla la mousse brune qui corrompt l’image de Dieu.
-
-	Mais allons ! La mâture a précédé la quille. Tâchons de nous souvenir des mensonges pieux qui nous furent conférés, et rappelons-nous ces soirées d’automne où l’écho nous appelait par des noms que nous avons oubliés.</div>
-<div class='nav-buttons'><a href='0_PREFACE.html'>&larr; Préface</a><span></span></div>
-<p><a href='Silence.html'>← Silence</a></p>
-  </div>
-</body>
-</html>
+}
+</style>

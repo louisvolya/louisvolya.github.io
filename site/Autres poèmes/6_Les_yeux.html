@@ -1,235 +1,115 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <style>
-    body {
-        font-family: Georgia, "Times New Roman", serif;
-        line-height: 1.6;
-        background-color: #fefefe;
-        color: #111;
-        margin: 0;
-        padding: 2rem 0;
-        display: flex;
-        justify-content: center;
-    }
+<style>
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+    background-color: #fefefe;
+    color: #111;
+    margin: 0;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
 
-    .container {
-        max-width: 900px;
-        width: 90%;
-        padding: 0 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.container {
+    max-width: 900px;
+    width: 90%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: normal;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+.poem-box {
+    max-width: 600px;
+    width: 100%;
+    background-color: #fafafa;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+    white-space: pre-wrap;
+    text-align: left;
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.1em;
+}
+
+/* --- Theater-specific styles --- */
+.poem-box.theatre {
+    font-size: 1.05em;           /* slightly smaller for long text */
+    line-height: 1.5;
+}
+
+.act, .scene {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin: 1.5rem 0;
+}
+
+.didascaly {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    margin: 0.5rem 0;
+}
+
+.dialogue-name {
+    font-weight: bold;
+}
+
+ul {
+    max-width: 600px;
+    width: 100%;
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+a {
+    color: #0645ad;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    .poem-box, ul {
+        width: 95%;
+    }
     h1 {
-        text-align: center;
-        font-weight: bold;
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 2rem;
     }
-
     h2 {
-        text-align: center;
-        margin-bottom: 1rem;
-        font-weight: normal;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 1.5rem;
     }
-
-    .poem-box {
-        max-width: 600px;
-        width: 100%;
-        background-color: #fafafa;
-        padding: 1rem 1.5rem;
-        border-left: 4px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 1.5rem;
-        white-space: pre-wrap;
-        text-align: left;
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em;
-    }
-
-    ul {
-        max-width: 600px;
-        width: 100%;
-        padding-left: 1.2rem;
-        margin-bottom: 2rem;
-    }
-
-    a {
-        color: #0645ad;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    .nav-buttons {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 600px;
-        margin-top: 1rem;
-    }
-
-    /* === Theatre-specific formatting === */
     .poem-box.theatre {
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em; /* same as base */
-        text-align: left;
+        font-size: 1em;
     }
-
-    .poem-box.theatre .act,
-    .poem-box.theatre .scene {
-        display: block;
-        text-align: center;
-        font-weight: bold;
-        margin: 2rem 0 1rem 0;
-        font-size: 1.15em;
-        letter-spacing: 0.5px;
-    }
-
-    .poem-box.theatre .didascaly {
-        display: block;
-        text-align: center;
-        font-style: italic;
-        margin: 1rem 0;
-        color: #444;
-    }
-
-    .poem-box.theatre .dialogue-name {
-        font-weight: bold;
-    }
-
-    @media (max-width: 600px) {
-        h1 {
-            font-size: 2rem;
-        }
-        h2 {
-            font-size: 1.5rem;
-        }
-        .poem-box, .poem-box.theatre {
-            font-size: 1em;
-        }
-    }
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Les yeux</h2>
-<div class='poem-box'>Quand pour calmer le ciel des suprêmes colères,
-Un éclair fit descendre un Ange effarouché
-En ce monde béni par les voiles solaires,
-Il dit à une enfant qu'on venait d'accoucher :
-
-« Les Saints m'ont envoyé désigner un prophète
-Qui portera mon âme en exil ici-bas ;
-Et j'ai vu dans le cœur qui anime ta tête
-Le reflet de l'amour et des rudes combats.
-
-Je sais que pour cueillir les bourgeons d'infortune
-Les dards et les poisons devront crever tes mains,
-Qui s'enorgueilliront des câlins de la Lune
-Et d'avoir accordé les instruments divins !
-
-Mais pour accompagner ta longue solitude,
-L’Archange m’ordonna de te donner mes yeux.
-Tu verras le bonheur jaune des gratitudes
-Et les ténèbres d'or qui jaillissent des cieux ! »
-
-L'Ange laissa l'Enfant dans un berceau antique
-Et repartit aveugle à son trône immortel,
-Glissant sous un coussin songeur et séraphique
-La bénédiction de l’amour maternel.
-
-Et la mère élue par la divine cohorte
-Pour élever les yeux de l'enfant adoré
-Mit l’essai de sa foi aux ultimes escortes
-Qui adoubent les rois et vient les décorer.
-
-Le fabuleux Enfant aux pupilles d'éclipse
-Voit les lys argentés pousser aux pavillons ;
-Et les longs cils soyeux de ses grandes ellipses
-Flottent tranquillement avec les papillons !
-
-Ses iris sont d'un or réservé aux sirènes
-Que vont éblouissant coquillages nacrés,
-Montant des profondeurs dans leurs paumes vilaines
-D’horribles grains devant ses orbites sacrés.
-
-Dans l’ombre où le désir mêle ses litanies
-Aux dentelles tressées par des cœurs amoureux,
-Les joyaux enchanteurs ouverts à l'euphonie
-Projettent avec joie leurs éclats lumineux.
-
-Mais la Femme maudite envie avec haleine
-Les décors inconnus où les illusions
-Apaisent la conscience et l’âme incertaine
-Des diables condamnés à l’âpre occlusion.
-
-Et voulant restaurer les splendeurs millénaires,
-Elle penche sur l’eau son regard dépité ;
-Un Poëte surgit des ondes éphémères 
-Et oint le blême front de sa prospérité :
-
-« Puisque tu ne peux pas user des saintes lampes
-Pour éclairer le sol qu’enracine tes pas,
-Et qu’il faudrait percer d’un pic tes fines tempes
-Afin d’alchimiser l’agonie en trépas,
-
-Je montrerai au peuple et aux sages noblesses
-Les disques de platine où tes yeux sont frappés ;
-Soumettant à la Mort les ombres vengeresses,
-Je rosserai d'effroi les démons rattrapés !
-
-Car il faut prononcer autant de sortilèges
-Que je dois incruster le papier de longs vers
-Pour remédier au primaire sacrilège
-Qu'est de barricader tes sublimes yeux verts !
-
-Ô prisme sidéral d’une âme en floraison,
-Ô cathédrales d’or, tes yeux d’aube profonde
-Où l’on entre, tremblant, sans jamais de raison,
-Mais d’où l’on sort vaincu, ivre d’une seconde,
-
-Ton regard, noble abîme où l’azur se reflète,
-Contient plus de splendeur que mille cieux ouverts.
-Même l’Ange exilé, à présent sans sa tête,
-Se damnerait pour voir tes deux tournesols verts.
-
-Tes larmes, les liqueurs issues de l’ambroisie,
-Mélangent aux senteurs divines leur parfum.
-Et goûtant, délicat, ta douce âme choisie,
-Je m’en vais voguer sur les ailes du dauphin.
-
-Les cornes du taureau s’inclinent en silence,
-Les plumes du phénix vont faillir sans tarder ;
-Tes prunelles sont nues et l'astrale balance
-Vacille à l’horizon de tes longs fils brodés.
-
-Tes pupilles d’éclair, les lyres enflammées,
-L’émeraude oculaire où les nuages bleus
-Étalent leur brouillard et leur chair affamée,
-Les remèdes à ma soif de déserts sableux,
-
-Que j’aimerais y boire en donnant ma démence !
-Gardant les perles pour te tisser un collier.
-Et tu y verrais luire avec indifférence
-Les rayons merveilleux de tes beaux boucliers !
-
-Je sculpterai des lacs pour que tu puisses naître
-Si quelconque imposteur te prive de miroir ;
-Puisque de mon bonheur tes fameux yeux sont maîtres,
-Qu'un jour sans eux me fait l'effet d'un soleil noir ! »</div>
-<div class='nav-buttons'><a href='5_Danse_étoilée.html'>&larr; Danse étoilée</a><a href='7_LE_VENT_DES_SAULES.html'>Le vent des saules &rarr;</a></div>
-<p><a href='Autres poèmes.html'>← Autres poèmes</a></p>
-  </div>
-</body>
-</html>
+}
+</style>

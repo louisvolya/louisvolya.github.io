@@ -1,142 +1,115 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <style>
-    body {
-        font-family: Georgia, "Times New Roman", serif;
-        line-height: 1.6;
-        background-color: #fefefe;
-        color: #111;
-        margin: 0;
-        padding: 2rem 0;
-        display: flex;
-        justify-content: center;
-    }
+<style>
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+    background-color: #fefefe;
+    color: #111;
+    margin: 0;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
 
-    .container {
-        max-width: 900px;
-        width: 90%;
-        padding: 0 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.container {
+    max-width: 900px;
+    width: 90%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: normal;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+.poem-box {
+    max-width: 600px;
+    width: 100%;
+    background-color: #fafafa;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+    white-space: pre-wrap;
+    text-align: left;
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.1em;
+}
+
+/* --- Theater-specific styles --- */
+.poem-box.theatre {
+    font-size: 1.05em;           /* slightly smaller for long text */
+    line-height: 1.5;
+}
+
+.act, .scene {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin: 1.5rem 0;
+}
+
+.didascaly {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    margin: 0.5rem 0;
+}
+
+.dialogue-name {
+    font-weight: bold;
+}
+
+ul {
+    max-width: 600px;
+    width: 100%;
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+a {
+    color: #0645ad;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    .poem-box, ul {
+        width: 95%;
+    }
     h1 {
-        text-align: center;
-        font-weight: bold;
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 2rem;
     }
-
     h2 {
-        text-align: center;
-        margin-bottom: 1rem;
-        font-weight: normal;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 1.5rem;
     }
-
-    .poem-box {
-        max-width: 600px;
-        width: 100%;
-        background-color: #fafafa;
-        padding: 1rem 1.5rem;
-        border-left: 4px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 1.5rem;
-        white-space: pre-wrap;
-        text-align: left;
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em;
-    }
-
-    ul {
-        max-width: 600px;
-        width: 100%;
-        padding-left: 1.2rem;
-        margin-bottom: 2rem;
-    }
-
-    a {
-        color: #0645ad;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    .nav-buttons {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 600px;
-        margin-top: 1rem;
-    }
-
-    /* === Theatre-specific formatting === */
     .poem-box.theatre {
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em; /* same as base */
-        text-align: left;
+        font-size: 1em;
     }
-
-    .poem-box.theatre .act,
-    .poem-box.theatre .scene {
-        display: block;
-        text-align: center;
-        font-weight: bold;
-        margin: 2rem 0 1rem 0;
-        font-size: 1.15em;
-        letter-spacing: 0.5px;
-    }
-
-    .poem-box.theatre .didascaly {
-        display: block;
-        text-align: center;
-        font-style: italic;
-        margin: 1rem 0;
-        color: #444;
-    }
-
-    .poem-box.theatre .dialogue-name {
-        font-weight: bold;
-    }
-
-    @media (max-width: 600px) {
-        h1 {
-            font-size: 2rem;
-        }
-        h2 {
-            font-size: 1.5rem;
-        }
-        .poem-box, .poem-box.theatre {
-            font-size: 1em;
-        }
-    }
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Particules fantômes</h2>
-<div class='poem-box'>‎ 	Les mois de brume étaient aux portes du temps ! Levez-vous, spectres du soir, envoyés du matin, ombres de l’étranger venu perdre son anonymat dans des foules sournoises – et comment l’en préserver ? 
-
-	Horreur ! Le monde frappait. Il m’a frappé d’un, ou de deux, ou de trois coups de massue pour rendre à ma tête le goût du sang et la douleur d’être. Ma tête portée à la tornade tomba sur le sol glacé où l’hiver mordait sa saison ! 
-
-	Béhémoth véhément, guerrier et soldat indomptable, je te voyais ruiner ce qui était – et ce qui fut ! Ta dague affûtée lacérait les draps de ma perception. Tu te nourrissais des yeux bas et lourds, des torses arrondis, des têtes dressées, des inattentifs. Une étoile brève ; elle mourrait avant tes victimes ; l’œil du ciel t’était spectateur, si bien que nous mourûmes sans jamais te voir. Voyait-on, savait-on, qui sait ? 
-
-	Ta laideur infinie, ta réalité assommante venue réveiller des têtes endormies – parfois, elles sont déjà bien éveillées – ne sont aucune issue. Il n’y a de fin que l’abandon ; je vois en l’infini la chance du renouveau ! Car il existe dehors des marins d’espoir, au port de l’existence, sur un navire fraîchement amarré. Et ces moussaillons nous apprendrons comment braver les tempêtes du Pacifique. Sans doute leur coque se brisera au détour d’une vague douce, dans un grand raz-de-marée, contre un récif ou le long d’un corail, mais qu’importe ? Salvateurs ! Guides ! Héros des marées ! Je conterai les légendes de vos bravoures ! 
-
-	Un balcon accueille cette pensée. La Lune du soir m’a vu pleurer, je l’ai vue se lamenter, nous sommes quittes. Froid ! Laisse-moi un peu de répit. La hauteur me donne vertiges… Je suis sentinelle, ou pitoyable nid-de-pie, ou innocent moineau, ou ridicule hâbleur, ou minable cafard ! Laissez ! Laissez, je vais regarder encore un peu le ciel. Il est rouge, non du sang, non du fer, il est rouge. J’aimerais que demain il soit de nouveau bleu. 
-
-	Penché sur le vide intérieur, le sol n’est pas. Ni nymphes, ni centaures, ni silhouettes… Si je dois être plus raisonnable, imaginons demain : en l’espace insécable où s’arrête la brouille du terrain je vois une clarté splendide ; il peut en être ainsi ; s’il faut choisir, je fais ! Je préserve ce qui n’a pas encore été, ce qui n’a pas tout à fait été béni du don d’être. Rien ne vaut la pureté d’un lendemain heureux ; hier et aujourd’hui en sont indignes !</div>
-<div class='nav-buttons'><a href='2_FEU.html'>&larr; Feu</a><a href='4_LE_VOYAGEUR.html'>Le Voyageur &rarr;</a></div>
-<p><a href='Les_lauriers_de_Satan.html'>← Les lauriers de Satan</a></p>
-  </div>
-</body>
-</html>
+}
+</style>

@@ -1,140 +1,115 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <style>
-    body {
-        font-family: Georgia, "Times New Roman", serif;
-        line-height: 1.6;
-        background-color: #fefefe;
-        color: #111;
-        margin: 0;
-        padding: 2rem 0;
-        display: flex;
-        justify-content: center;
-    }
+<style>
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+    background-color: #fefefe;
+    color: #111;
+    margin: 0;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
 
-    .container {
-        max-width: 900px;
-        width: 90%;
-        padding: 0 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.container {
+    max-width: 900px;
+    width: 90%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: normal;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+.poem-box {
+    max-width: 600px;
+    width: 100%;
+    background-color: #fafafa;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+    white-space: pre-wrap;
+    text-align: left;
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.1em;
+}
+
+/* --- Theater-specific styles --- */
+.poem-box.theatre {
+    font-size: 1.05em;           /* slightly smaller for long text */
+    line-height: 1.5;
+}
+
+.act, .scene {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin: 1.5rem 0;
+}
+
+.didascaly {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    margin: 0.5rem 0;
+}
+
+.dialogue-name {
+    font-weight: bold;
+}
+
+ul {
+    max-width: 600px;
+    width: 100%;
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+a {
+    color: #0645ad;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    .poem-box, ul {
+        width: 95%;
+    }
     h1 {
-        text-align: center;
-        font-weight: bold;
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 2rem;
     }
-
     h2 {
-        text-align: center;
-        margin-bottom: 1rem;
-        font-weight: normal;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 1.5rem;
     }
-
-    .poem-box {
-        max-width: 600px;
-        width: 100%;
-        background-color: #fafafa;
-        padding: 1rem 1.5rem;
-        border-left: 4px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 1.5rem;
-        white-space: pre-wrap;
-        text-align: left;
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em;
-    }
-
-    ul {
-        max-width: 600px;
-        width: 100%;
-        padding-left: 1.2rem;
-        margin-bottom: 2rem;
-    }
-
-    a {
-        color: #0645ad;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    .nav-buttons {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 600px;
-        margin-top: 1rem;
-    }
-
-    /* === Theatre-specific formatting === */
     .poem-box.theatre {
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em; /* same as base */
-        text-align: left;
+        font-size: 1em;
     }
-
-    .poem-box.theatre .act,
-    .poem-box.theatre .scene {
-        display: block;
-        text-align: center;
-        font-weight: bold;
-        margin: 2rem 0 1rem 0;
-        font-size: 1.15em;
-        letter-spacing: 0.5px;
-    }
-
-    .poem-box.theatre .didascaly {
-        display: block;
-        text-align: center;
-        font-style: italic;
-        margin: 1rem 0;
-        color: #444;
-    }
-
-    .poem-box.theatre .dialogue-name {
-        font-weight: bold;
-    }
-
-    @media (max-width: 600px) {
-        h1 {
-            font-size: 2rem;
-        }
-        h2 {
-            font-size: 1.5rem;
-        }
-        .poem-box, .poem-box.theatre {
-            font-size: 1em;
-        }
-    }
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Après</h2>
-<div class='poem-box'>Les Sycomores fouettaient de leur vigueur les indomptables squelettes. Je vouais aux Pieux mes larmes absentes de toute culpabilité.
-
-	Les Cent fleurs des Champs désolés accueillaient les oiseaux. Je saluai d’un bref coup d’ailes mes compères d’antan.
-
-	Pensif ? Mes Serres ironisaient ! Je figurais dans mon esprit des couloirs intemporels abandonnés de ma surveillance. Point d'étoile ou de vérité ; le chant de la révolte sera mon épitaphe.
-
-	Quel cœur est sans Défauts ?
-
-	J’ai cru bien faire en décidant seul de vos avenirs ; ce ne peut être que le goût d’Apollon et du crachat.</div>
-<div class='nav-buttons'><a href='19_ORAGE_TONNERRE_NUAGE_PLUIE.html'>&larr; Orage, Tonnerre, Nuage, Pluie</a><a href='21_LA_VEUVE_ORPHELINE.html'>La veuve orpheline &rarr;</a></div>
-<p><a href='Les_lauriers_de_Satan.html'>← Les lauriers de Satan</a></p>
-  </div>
-</body>
-</html>
+}
+</style>

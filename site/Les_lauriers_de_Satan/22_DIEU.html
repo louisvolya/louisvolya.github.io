@@ -1,174 +1,115 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <style>
-    body {
-        font-family: Georgia, "Times New Roman", serif;
-        line-height: 1.6;
-        background-color: #fefefe;
-        color: #111;
-        margin: 0;
-        padding: 2rem 0;
-        display: flex;
-        justify-content: center;
-    }
+<style>
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+    background-color: #fefefe;
+    color: #111;
+    margin: 0;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
 
-    .container {
-        max-width: 900px;
-        width: 90%;
-        padding: 0 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.container {
+    max-width: 900px;
+    width: 90%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: normal;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+.poem-box {
+    max-width: 600px;
+    width: 100%;
+    background-color: #fafafa;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+    white-space: pre-wrap;
+    text-align: left;
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.1em;
+}
+
+/* --- Theater-specific styles --- */
+.poem-box.theatre {
+    font-size: 1.05em;           /* slightly smaller for long text */
+    line-height: 1.5;
+}
+
+.act, .scene {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin: 1.5rem 0;
+}
+
+.didascaly {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    margin: 0.5rem 0;
+}
+
+.dialogue-name {
+    font-weight: bold;
+}
+
+ul {
+    max-width: 600px;
+    width: 100%;
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+a {
+    color: #0645ad;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    .poem-box, ul {
+        width: 95%;
+    }
     h1 {
-        text-align: center;
-        font-weight: bold;
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 2rem;
     }
-
     h2 {
-        text-align: center;
-        margin-bottom: 1rem;
-        font-weight: normal;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 1.5rem;
     }
-
-    .poem-box {
-        max-width: 600px;
-        width: 100%;
-        background-color: #fafafa;
-        padding: 1rem 1.5rem;
-        border-left: 4px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 1.5rem;
-        white-space: pre-wrap;
-        text-align: left;
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em;
-    }
-
-    ul {
-        max-width: 600px;
-        width: 100%;
-        padding-left: 1.2rem;
-        margin-bottom: 2rem;
-    }
-
-    a {
-        color: #0645ad;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    .nav-buttons {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 600px;
-        margin-top: 1rem;
-    }
-
-    /* === Theatre-specific formatting === */
     .poem-box.theatre {
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em; /* same as base */
-        text-align: left;
+        font-size: 1em;
     }
-
-    .poem-box.theatre .act,
-    .poem-box.theatre .scene {
-        display: block;
-        text-align: center;
-        font-weight: bold;
-        margin: 2rem 0 1rem 0;
-        font-size: 1.15em;
-        letter-spacing: 0.5px;
-    }
-
-    .poem-box.theatre .didascaly {
-        display: block;
-        text-align: center;
-        font-style: italic;
-        margin: 1rem 0;
-        color: #444;
-    }
-
-    .poem-box.theatre .dialogue-name {
-        font-weight: bold;
-    }
-
-    @media (max-width: 600px) {
-        h1 {
-            font-size: 2rem;
-        }
-        h2 {
-            font-size: 1.5rem;
-        }
-        .poem-box, .poem-box.theatre {
-            font-size: 1em;
-        }
-    }
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Dieu</h2>
-<div class='poem-box'>‎ 	Enfin, ton tour est venu !
-
-	Qu’as-tu donc fait ? Puis-je même en comprendre la trace ? Je croyais voir un peu de ton doigt où résidait la Beauté.
-
-	Ton premier fils instaurait jadis toutes nos douleurs. Ô douleurs, nées avec le Roi et par l’Enfer perpétuées ! Tous leurs descendants – moi y compris, hélas ! – en pâtissent encore. Enfer de croire à ta distance, de sentir davantage la main humaine et squelettique que ta paume divine et œcuménique.
-
-	Quelle pédanterie ! Préfères-tu ces termes élogieux ? Toi, l’organe indomptable et le monarque des fatuités ? Tes silences sont fades et tes paroles insensées.
-
-	Roulais-je naguère dans mes rideaux sombres lorsque j’entendis tes doux murmures. Ta voix insidieuse s’insémine, somptueuse, satisfaite, sinistre, psalmodiant les songes du serpent sur l’Arbre. Tes sifflements sont pareils aux sirènes.
-
-	Toi qui a tout vu, tout entendu, tout imaginé, quels rêves peux-tu donc avoir ? Tu m’as maudit de cette paralysie ; mes rêves me condamnent au silence. Et je ne m’écrie qu’au réveil !
-
-	Vaste chimère, l’éternelle question, qui pourtant se présente comme le Verbe et la Réponse ! Tes prophètes sont renouvelés – ton avant-garde est sauve.
-
-	Je comprends ta justice.
-
-	Tu t’es éloigné de la sublime Afrique. L’homme primitif t’a laissé dans ses grottes gribouillées. On te dessine, nous te prions, nos cœurs hurlent.
-
-	Moi ! moi qui hais le feu et qui ai triomphé de la Mort. Il faut résolument me comprendre. Tu ne connais rien de tout cela. Ton œil est inégal.
-
-	La violence et la mort te précèdent. Et tu es leur enfant, elles te dominent en tout point.
-
-	Et mon cœur s’effrayait de comprendre leurs souffrances. Tes océans, tes galaxies, tes silences, tes interminables silences, j’aurais pu les apercevoir ! Tu as opposé le rouge au bleu. Ta conscience est vaine ; mon destin est glorieux. Je te retiendrai sur toutes les terres, dans toutes les villes, sur toutes les vagues, dans toutes retraites comme celui qui n’a jamais fantasmé ! Quel ennui ! Quel orgueil !
-
-	Tout le mal peut t’être imputé. Désastre ! Tu te tortures des mêmes tares que l’amant et le maudit. Désastre ! Ton cerveau est moisi…
-
-	Il est des choses dans mon cœur que tu n’avais pas pensées. Il fut des maux dans mon cœur que tu n’avais pas pansés. Mièvre. Tes desseins manquent de détails. Tu n’as pas pu peindre le rouge du sang qui m’alimente ; mes couleurs te surpassent. C’est la lumière de la nuit !
-
-	Mon âme voyage au-delà de ta vision, toi qui es interdit de l’Enfer. Si tu gardes tous les Saints, j’irai aux Créateurs et aux Ignorés pour leur conter mes très-divines actions. Mes semaines ont huit jours et mes yeux sont triples.
-
-	L’homme à ton image te fait mauvais. Nos cœurs singuliers composent la fugue.
-
-	Je n’ai qu’un seul Dieu. J’en ai joint les partitions dans une seule et même âme.
-
-	Ce serait la terre Sainte des croix sur les heaumes écrasés.
-
-	Dieu infâme ! Ton étendue est inférieure à ma perception. L’ennemi du progrès, le menteur.
-
-	Les Anges, doux Anges, trébuchent loin de tes doigts. J’ai rallié le Mal et la Musique. La Rébellion t’attend ; Lucifer m’envie ! Et tout crie dans ma lourde tête. Les fumées incendiaires me montent à l’esprit ; Non c’est tout. La guerre s’orchestre.
-
-	Mes nouveaux anges ; l’étendard surplombe les marais oubliés.
-
-	Ce serait la divine Croisade !</div>
-<div class='nav-buttons'><a href='21_LA_VEUVE_ORPHELINE.html'>&larr; La veuve orpheline</a><a href='23_CRÉATION.html'>Création &rarr;</a></div>
-<p><a href='Les_lauriers_de_Satan.html'>← Les lauriers de Satan</a></p>
-  </div>
-</body>
-</html>
+}
+</style>

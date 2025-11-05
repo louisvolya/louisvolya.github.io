@@ -1,148 +1,115 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <style>
-    body {
-        font-family: Georgia, "Times New Roman", serif;
-        line-height: 1.6;
-        background-color: #fefefe;
-        color: #111;
-        margin: 0;
-        padding: 2rem 0;
-        display: flex;
-        justify-content: center;
-    }
+<style>
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+    background-color: #fefefe;
+    color: #111;
+    margin: 0;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
 
-    .container {
-        max-width: 900px;
-        width: 90%;
-        padding: 0 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.container {
+    max-width: 900px;
+    width: 90%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: normal;
+    font-family: "Garamond", "Georgia", serif;
+}
+
+.poem-box {
+    max-width: 600px;
+    width: 100%;
+    background-color: #fafafa;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+    white-space: pre-wrap;
+    text-align: left;
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.1em;
+}
+
+/* --- Theater-specific styles --- */
+.poem-box.theatre {
+    font-size: 1.05em;           /* slightly smaller for long text */
+    line-height: 1.5;
+}
+
+.act, .scene {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin: 1.5rem 0;
+}
+
+.didascaly {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    margin: 0.5rem 0;
+}
+
+.dialogue-name {
+    font-weight: bold;
+}
+
+ul {
+    max-width: 600px;
+    width: 100%;
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+a {
+    color: #0645ad;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    .poem-box, ul {
+        width: 95%;
+    }
     h1 {
-        text-align: center;
-        font-weight: bold;
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 2rem;
     }
-
     h2 {
-        text-align: center;
-        margin-bottom: 1rem;
-        font-weight: normal;
-        font-family: "Garamond", "Georgia", serif;
+        font-size: 1.5rem;
     }
-
-    .poem-box {
-        max-width: 600px;
-        width: 100%;
-        background-color: #fafafa;
-        padding: 1rem 1.5rem;
-        border-left: 4px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 1.5rem;
-        white-space: pre-wrap;
-        text-align: left;
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em;
-    }
-
-    ul {
-        max-width: 600px;
-        width: 100%;
-        padding-left: 1.2rem;
-        margin-bottom: 2rem;
-    }
-
-    a {
-        color: #0645ad;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    .nav-buttons {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 600px;
-        margin-top: 1rem;
-    }
-
-    /* === Theatre-specific formatting === */
     .poem-box.theatre {
-        font-family: "Georgia", "Times New Roman", serif;
-        font-size: 1.1em; /* same as base */
-        text-align: left;
+        font-size: 1em;
     }
-
-    .poem-box.theatre .act,
-    .poem-box.theatre .scene {
-        display: block;
-        text-align: center;
-        font-weight: bold;
-        margin: 2rem 0 1rem 0;
-        font-size: 1.15em;
-        letter-spacing: 0.5px;
-    }
-
-    .poem-box.theatre .didascaly {
-        display: block;
-        text-align: center;
-        font-style: italic;
-        margin: 1rem 0;
-        color: #444;
-    }
-
-    .poem-box.theatre .dialogue-name {
-        font-weight: bold;
-    }
-
-    @media (max-width: 600px) {
-        h1 {
-            font-size: 2rem;
-        }
-        h2 {
-            font-size: 1.5rem;
-        }
-        .poem-box, .poem-box.theatre {
-            font-size: 1em;
-        }
-    }
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Vérité</h2>
-<div class='poem-box'>‎ 	« Je vous écris ! Pour rattraper le temps dissous. Les places publiques m’avaient toutes aperçu.  Ne sachant comment parler sans les arguments saints, il vaudrait sans doute mieux montrer.
-
-	Pour autant que je me souvienne, les commerçants n’avaient pas moins de mérite que les scientifiques. Je ne crois en aucun des échanges matériels avec la Nature. Ô pureté de la connaissance infinie ! Je pourrais trouver des pleins tiroirs de pansements du vide et de miraculés du néant.
-
-	Voyons avec moins de dégoût les essais lyriques.
-
-	On accordait à la rigueur un implacable pouvoir de décision ; quel ne fut pas leur désarroi quand l’idée du Bien se substitua au Beau ! Le manichéisme des fleurs n’a pas vocation à s’ouvrir avec les bourgeons. J’avais glissé une oreille à la conversation entre le bonheur et la science – aucune classe d’aucune école n’enseignait ni l’un, ni l’autre ! C’est par ailleurs la fin du monde. La gourmandise m’attendait aux portes de l’éternité.
-
-	Nous aurions décoré d’autres bastilles et séché dans le sang des briques d’outremer. Les colonies sont faites d’or et de poudre. Non ! Chaque feuille par une coccinelle remontée se vaut à l’exploitation brutale.
-
-	Comme si, à l’inverse, la vision du Grand expliquait la cruauté ! J’ai d’autres projets – Beauté, Connaissance, Idée, vous commencez à connaître… – qui m’imposent d’avancer ailleurs. Nous devons partir  –  ou plutôt, non –, nous devons rejoindre.
-
-	J’ai longtemps cogité dans un grand fauteuil raide et solide. Le courage manquait, quoique mes pérégrinations solitaires m’aient mené aux plus sombres forêts. Je peux encore évoquer à l’ancêtre de mon esprit actuel les horreurs des arbres défigurés. Les branches de cercueil – je me souviens de celles-ci, davantage que les autres – que l’on dit des cerfs ou des démons ; c’est selon.
-
-	Je ne puis vous en convaincre ; accordons à la vigueur la sentence de mes élans vers la folie. Je n’aspire pas au bien – la révolution seule m’apporte le réconfort du deuil. Le guérisseur a le plus de sang sur les mains – et de quelle vertu ! – et la perfection se récolte dans l’autre réalité. Mon œil est de celui qui voit au miroir le reflet du monde et des jonquilles. 
-
-	J’écris par la tension infernale qui garde la colère levée. »</div>
-<div class='nav-buttons'><a href='25_ESCHATOLOGIE.html'>&larr; Eschatologie</a><a href='27_GÉNIE.html'>Génie &rarr;</a></div>
-<p><a href='Les_lauriers_de_Satan.html'>← Les lauriers de Satan</a></p>
-  </div>
-</body>
-</html>
+}
+</style>
