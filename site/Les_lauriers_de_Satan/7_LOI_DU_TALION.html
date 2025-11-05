@@ -1,115 +1,140 @@
-<style>
-body {
-    font-family: Georgia, "Times New Roman", serif;
-    line-height: 1.6;
-    background-color: #fefefe;
-    color: #111;
-    margin: 0;
-    padding: 2rem 0;
-    display: flex;
-    justify-content: center;
-}
-
-.container {
-    max-width: 900px;
-    width: 90%;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    text-align: center;
-    font-weight: bold;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    font-family: "Garamond", "Georgia", serif;
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-weight: normal;
-    font-family: "Garamond", "Georgia", serif;
-}
-
-.poem-box {
-    max-width: 600px;
-    width: 100%;
-    background-color: #fafafa;
-    padding: 1rem 1.5rem;
-    border-left: 4px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin-bottom: 1.5rem;
-    white-space: pre-wrap;
-    text-align: left;
-    font-family: "Georgia", "Times New Roman", serif;
-    font-size: 1.1em;
-}
-
-/* --- Theater-specific styles --- */
-.poem-box.theatre {
-    font-size: 1.05em;           /* slightly smaller for long text */
-    line-height: 1.5;
-}
-
-.act, .scene {
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    margin: 1.5rem 0;
-}
-
-.didascaly {
-    display: block;
-    text-align: center;
-    font-style: italic;
-    margin: 0.5rem 0;
-}
-
-.dialogue-name {
-    font-weight: bold;
-}
-
-ul {
-    max-width: 600px;
-    width: 100%;
-    padding-left: 1.2rem;
-    margin-bottom: 2rem;
-}
-
-a {
-    color: #0645ad;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 600px;
-    margin-top: 1rem;
-}
-
-/* Responsive adjustments for mobile */
-@media (max-width: 600px) {
-    .poem-box, ul {
-        width: 95%;
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    body {
+        font-family: Georgia, "Times New Roman", serif;
+        line-height: 1.6;
+        background-color: #fefefe;
+        color: #111;
+        margin: 0;
+        padding: 2rem 0;
+        display: flex;
+        justify-content: center;
     }
+
+    .container {
+        max-width: 900px;
+        width: 90%;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     h1 {
-        font-size: 2rem;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        font-family: "Garamond", "Georgia", serif;
     }
+
     h2 {
-        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: normal;
+        font-family: "Garamond", "Georgia", serif;
     }
+
+    .poem-box {
+        max-width: 600px;
+        width: 100%;
+        background-color: #fafafa;
+        padding: 1rem 1.5rem;
+        border-left: 4px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 1.5rem;
+        white-space: pre-wrap;
+        text-align: left;
+        font-family: "Georgia", "Times New Roman", serif;
+        font-size: 1.1em;
+    }
+
+    /* --- Theater-specific styles --- */
     .poem-box.theatre {
-        font-size: 1em;
+        font-size: 1.05em;
+        line-height: 1.5;
     }
-}
-</style>
+
+    .act, .scene {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        margin: 1.5rem 0;
+    }
+
+    .didascaly {
+        display: block;
+        text-align: center;
+        font-style: italic;
+        margin: 0.5rem 0;
+    }
+
+    .dialogue-name {
+        font-weight: bold;
+    }
+
+    ul {
+        max-width: 600px;
+        width: 100%;
+        padding-left: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    a {
+        color: #0645ad;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px;
+        margin-top: 1rem;
+    }
+
+    /* Responsive adjustments for mobile */
+    @media (max-width: 600px) {
+        .poem-box, ul {
+            width: 95%;
+        }
+        h1 {
+            font-size: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .poem-box.theatre {
+            font-size: 1em;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Loi du talion</h2>
+<div class='poem-box'>‎ 	L’étranger se revêt du soir. Le matin, l’amour dort encore ; et quand l’amour se masque et qu’il couvre ses oreilles d’un doux pelage sauvagement arraché à la bête, le rémanent s’élève. Un simple linceul l’habille ; comme le houx et le sapin, tout garni d’épines et de venin. L’enfant déshérité de la Nature.
+
+	Je ne vois que ses yeux de cendre perdus dans l’horizon ! Dans les étoiles où sa cervelle se consume ; yeux d’éruption ; depuis longtemps ; le feu ne regarde pas en arrière. 
+
+	S’étonner de la noyade ?
+
+	Figurez une sombre tache informe, une masse inerte et acariâtre, un amas de ciment et de chair maladroitement compacté ; le ciel n’a plus d’yeux pour lui ; il est l’Invisible. Le Diable ! Ce dernier ne verra plus le jour et goûtera aux algues du Léthé.
+
+	Comment s’en vouloir, vouloir, quand l’atrocité est aveugle ? Il est le seigneur du soir, il n’est pas, il n’est rien car rien ne le voit ni ne le regarde. Il existe partout, dit tout, à tout instant ; mais dans sa maisonnée tristement vide seul l’appel du silence subsiste.
+
+	L’Invisible est le seul marin du torrent des lamentations. Le démon le regarde dans le miroir.</div>
+<div class='nav-buttons'><a href='6_LE_REVE_ET_L_IDEAL.html'>&larr; Le Rêve et l'Idéal</a><a href='8_ENNEMI_COMMUN.html'>Ennemi commun &rarr;</a></div>
+<p><a href='Les_lauriers_de_Satan.html'>← Les lauriers de Satan</a></p>
+  </div>
+</body>
+</html>

@@ -1,115 +1,140 @@
-<style>
-body {
-    font-family: Georgia, "Times New Roman", serif;
-    line-height: 1.6;
-    background-color: #fefefe;
-    color: #111;
-    margin: 0;
-    padding: 2rem 0;
-    display: flex;
-    justify-content: center;
-}
-
-.container {
-    max-width: 900px;
-    width: 90%;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    text-align: center;
-    font-weight: bold;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    font-family: "Garamond", "Georgia", serif;
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-weight: normal;
-    font-family: "Garamond", "Georgia", serif;
-}
-
-.poem-box {
-    max-width: 600px;
-    width: 100%;
-    background-color: #fafafa;
-    padding: 1rem 1.5rem;
-    border-left: 4px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin-bottom: 1.5rem;
-    white-space: pre-wrap;
-    text-align: left;
-    font-family: "Georgia", "Times New Roman", serif;
-    font-size: 1.1em;
-}
-
-/* --- Theater-specific styles --- */
-.poem-box.theatre {
-    font-size: 1.05em;           /* slightly smaller for long text */
-    line-height: 1.5;
-}
-
-.act, .scene {
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    margin: 1.5rem 0;
-}
-
-.didascaly {
-    display: block;
-    text-align: center;
-    font-style: italic;
-    margin: 0.5rem 0;
-}
-
-.dialogue-name {
-    font-weight: bold;
-}
-
-ul {
-    max-width: 600px;
-    width: 100%;
-    padding-left: 1.2rem;
-    margin-bottom: 2rem;
-}
-
-a {
-    color: #0645ad;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 600px;
-    margin-top: 1rem;
-}
-
-/* Responsive adjustments for mobile */
-@media (max-width: 600px) {
-    .poem-box, ul {
-        width: 95%;
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    body {
+        font-family: Georgia, "Times New Roman", serif;
+        line-height: 1.6;
+        background-color: #fefefe;
+        color: #111;
+        margin: 0;
+        padding: 2rem 0;
+        display: flex;
+        justify-content: center;
     }
+
+    .container {
+        max-width: 900px;
+        width: 90%;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     h1 {
-        font-size: 2rem;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        font-family: "Garamond", "Georgia", serif;
     }
+
     h2 {
-        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: normal;
+        font-family: "Garamond", "Georgia", serif;
     }
+
+    .poem-box {
+        max-width: 600px;
+        width: 100%;
+        background-color: #fafafa;
+        padding: 1rem 1.5rem;
+        border-left: 4px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 1.5rem;
+        white-space: pre-wrap;
+        text-align: left;
+        font-family: "Georgia", "Times New Roman", serif;
+        font-size: 1.1em;
+    }
+
+    /* --- Theater-specific styles --- */
     .poem-box.theatre {
-        font-size: 1em;
+        font-size: 1.05em;
+        line-height: 1.5;
     }
-}
-</style>
+
+    .act, .scene {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        margin: 1.5rem 0;
+    }
+
+    .didascaly {
+        display: block;
+        text-align: center;
+        font-style: italic;
+        margin: 0.5rem 0;
+    }
+
+    .dialogue-name {
+        font-weight: bold;
+    }
+
+    ul {
+        max-width: 600px;
+        width: 100%;
+        padding-left: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    a {
+        color: #0645ad;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px;
+        margin-top: 1rem;
+    }
+
+    /* Responsive adjustments for mobile */
+    @media (max-width: 600px) {
+        .poem-box, ul {
+            width: 95%;
+        }
+        h1 {
+            font-size: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .poem-box.theatre {
+            font-size: 1em;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>La veuve orpheline</h2>
+<div class='poem-box'>‎ 	Une anecdote qui me hante depuis des lustres. J’ai connu – longtemps autrefois, car les hasards nous avaient unis et séparés – la fille de France. Née dans l’église et les mythes païens, elle ne descendait du Christ ni d’esprit ni de chair. 
+
+	Elle tordait sa résignation pour quelques bijoux – or, doigts, colliers, et pour de plus vilains métaux comme l’os ou la moelle. Les tapis et les cordons de perles, les horloges d’or, les dessus-de-porte, les plafonds – de Michel-Ange, c’est dire ! – n’auraient pas suffi à satisfaire sa satiété. Et pourtant, les vins et les sangs ruisselaient de tous côtés noyant et ses flancs et ses seins. 
+
+	Il faut néanmoins accepter que j’imitais d’elle bien des manières. Même enfance, même élévation – et tout cela aurait dû converger vers un destin unique ! –, mais je reste garant de mon épitaphe. Nous n’aurions aimé que l’autre et jamais l’un, réunis dans un seul corps où il était loisible de mener la guerre d’Israël. Malgré tout, ni Nazareth ni Béthanie ou les autres culpabilités empruntées aux chrétiens ne nous auraient jamais convenu.
+
+	Avec elle, j’avais évoqué : Solitude, Vertige, Désolation – ce qui rend une âme une Âme, bref ! – et elle me répondait avec terreur. Nous partagions les lits et les cercueils. Et elle me partageait sa noblesse unique : son mari n’est jamais né. Ses enfants sont morts avant la chair. Que pouvais-je bien lui dire ?
+
+	Nous renoncions ensemble au blasphème ; je l’invitai à des noces cannibales, et nous y dansâmes toute une nuit puis tout une journée – je n’ai plus mémoire, en cet instant, du reste du Monde. Elle enfanta quelques berceaux de feu. Et nous restions, jusqu’à nos morts respectives, heureux et incompris.
+
+	Puissiez-vous, comprenant la véritable teneur de cette insaisissable féminité, ouïr avec mon assistance les clairons du Lendemain.</div>
+<div class='nav-buttons'><a href='20_APRÈS.html'>&larr; Après</a><a href='22_DIEU.html'>Dieu &rarr;</a></div>
+<p><a href='Les_lauriers_de_Satan.html'>← Les lauriers de Satan</a></p>
+  </div>
+</body>
+</html>

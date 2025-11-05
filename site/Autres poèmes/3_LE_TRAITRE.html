@@ -1,115 +1,146 @@
-<style>
-body {
-    font-family: Georgia, "Times New Roman", serif;
-    line-height: 1.6;
-    background-color: #fefefe;
-    color: #111;
-    margin: 0;
-    padding: 2rem 0;
-    display: flex;
-    justify-content: center;
-}
-
-.container {
-    max-width: 900px;
-    width: 90%;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    text-align: center;
-    font-weight: bold;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    font-family: "Garamond", "Georgia", serif;
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-weight: normal;
-    font-family: "Garamond", "Georgia", serif;
-}
-
-.poem-box {
-    max-width: 600px;
-    width: 100%;
-    background-color: #fafafa;
-    padding: 1rem 1.5rem;
-    border-left: 4px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin-bottom: 1.5rem;
-    white-space: pre-wrap;
-    text-align: left;
-    font-family: "Georgia", "Times New Roman", serif;
-    font-size: 1.1em;
-}
-
-/* --- Theater-specific styles --- */
-.poem-box.theatre {
-    font-size: 1.05em;           /* slightly smaller for long text */
-    line-height: 1.5;
-}
-
-.act, .scene {
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    margin: 1.5rem 0;
-}
-
-.didascaly {
-    display: block;
-    text-align: center;
-    font-style: italic;
-    margin: 0.5rem 0;
-}
-
-.dialogue-name {
-    font-weight: bold;
-}
-
-ul {
-    max-width: 600px;
-    width: 100%;
-    padding-left: 1.2rem;
-    margin-bottom: 2rem;
-}
-
-a {
-    color: #0645ad;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 600px;
-    margin-top: 1rem;
-}
-
-/* Responsive adjustments for mobile */
-@media (max-width: 600px) {
-    .poem-box, ul {
-        width: 95%;
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    body {
+        font-family: Georgia, "Times New Roman", serif;
+        line-height: 1.6;
+        background-color: #fefefe;
+        color: #111;
+        margin: 0;
+        padding: 2rem 0;
+        display: flex;
+        justify-content: center;
     }
+
+    .container {
+        max-width: 900px;
+        width: 90%;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     h1 {
-        font-size: 2rem;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        font-family: "Garamond", "Georgia", serif;
     }
+
     h2 {
-        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: normal;
+        font-family: "Garamond", "Georgia", serif;
     }
+
+    .poem-box {
+        max-width: 600px;
+        width: 100%;
+        background-color: #fafafa;
+        padding: 1rem 1.5rem;
+        border-left: 4px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 1.5rem;
+        white-space: pre-wrap;
+        text-align: left;
+        font-family: "Georgia", "Times New Roman", serif;
+        font-size: 1.1em;
+    }
+
+    /* --- Theater-specific styles --- */
     .poem-box.theatre {
-        font-size: 1em;
+        font-size: 1.05em;
+        line-height: 1.5;
     }
-}
-</style>
+
+    .act, .scene {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        margin: 1.5rem 0;
+    }
+
+    .didascaly {
+        display: block;
+        text-align: center;
+        font-style: italic;
+        margin: 0.5rem 0;
+    }
+
+    .dialogue-name {
+        font-weight: bold;
+    }
+
+    ul {
+        max-width: 600px;
+        width: 100%;
+        padding-left: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    a {
+        color: #0645ad;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px;
+        margin-top: 1rem;
+    }
+
+    /* Responsive adjustments for mobile */
+    @media (max-width: 600px) {
+        .poem-box, ul {
+            width: 95%;
+        }
+        h1 {
+            font-size: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .poem-box.theatre {
+            font-size: 1em;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Le traître</h2>
+<div class='poem-box'>Je m’endormais un jour dans la cape d’un pin
+Tout plein de charançons dont les bouches immondes
+Me rappelaient l’Apôtre à l’ultime festin
+Que l’on enveloppa d’odeurs nauséabondes ;
+
+Allongé là, coiffé de spectres incertains
+Je contemplais au loin ce grand et vaste monde
+Chercher partout au ciel l’insatiable faim
+Qui jadis fit la terre une veuve inféconde.
+
+Et mon œil s’abritait de ce puissant rayon
+Derrière un fantôme affublé de haillons
+Né de l’esprit d’un dieu déchu par égoïsme ;
+
+Tenant mes longs sanglots dans le creux de sa main
+L’étranger s’effondra, ne voyant dans son prisme
+Que la douleur de l’homme et de l’âme en son sein.</div>
+<div class='nav-buttons'><a href='2_L_ORAGE.html'>&larr; L’orage</a><a href='4_LE_PRINCE.html'>Le prince &rarr;</a></div>
+<p><a href='Autres poèmes.html'>← Autres poèmes</a></p>
+  </div>
+</body>
+</html>
