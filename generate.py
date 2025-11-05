@@ -45,6 +45,7 @@ def poem_sort_key(filename: str) -> int:
     return -1  
 
 
+# Generate homepage
 homepage_content = "<h1>Œuvres</h1>\n<ul>\n"
 
 for book in sorted(os.listdir(POEMS_DIR)):
@@ -63,6 +64,7 @@ with open("index.html", "w", encoding="utf-8") as f:
 print("Generated homepage with book links.")
 
 
+# Generate books and poems
 for book in sorted(os.listdir(POEMS_DIR)):
     book_path = os.path.join(POEMS_DIR, book)
     if not os.path.isdir(book_path):
@@ -72,6 +74,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
     book_output_dir = os.path.join(OUTPUT_DIR, book)
     os.makedirs(book_output_dir, exist_ok=True)
 
+    # Separate items into poems and chapters
     chapters = []
     poems = []
 
@@ -83,6 +86,8 @@ for book in sorted(os.listdir(POEMS_DIR)):
             poems.append(item)
 
     poems = sorted(poems, key=poem_sort_key)
+
+    # --- Generate individual poem pages directly under the book ---
     poem_links = []
     for i, filename in enumerate(poems):
         poem_path = os.path.join(book_path, filename)
@@ -113,7 +118,8 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
         poem_links.append((title, poem_file_name))
 
-    chapter_links = []
+    # --- Process chapter directories but DO NOT generate pages for them ---
+    chapter_sections = []
     for chapter in sorted(chapters):
         chapter_path = os.path.join(book_path, chapter)
         chapter_output_dir = os.path.join(book_output_dir, chapter)
@@ -123,7 +129,8 @@ for book in sorted(os.listdir(POEMS_DIR)):
         chapter_poems = [f for f in os.listdir(chapter_path) if f.endswith(".txt")]
         chapter_poems = sorted(chapter_poems, key=poem_sort_key)
 
-        chapter_poem_links = []
+        chapter_section = f"<h2>{chapter_display_name}</h2>\n<ul>\n"
+
         for i, filename in enumerate(chapter_poems):
             poem_path = os.path.join(chapter_path, filename)
             with open(poem_path, "r", encoding="utf-8") as f:
@@ -145,32 +152,30 @@ for book in sorted(os.listdir(POEMS_DIR)):
                 f"<h2>{title}</h2>\n"
                 f"<div class='poem-box'>{content}</div>\n"
                 f"{nav_html}\n"
-                f"<p><a href='{chapter}.html'>← {chapter_display_name}</a></p>"
+                f"<p><a href='../{book}.html'>← {book_display_name}</a></p>"
             )
 
             with open(poem_file_path, "w", encoding="utf-8") as f:
                 f.write(wrap(poem_html))
 
-            chapter_poem_links.append((title, poem_file_name))
+            chapter_section += f"<li><a href='{chapter}/{poem_file_name}'>{title}</a></li>\n"
 
-        chapter_page_html = f"<h1>{chapter_display_name}</h1>\n<ul>\n"
-        for title, link in chapter_poem_links:
-            chapter_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
-        chapter_page_html += f"</ul>\n<p><a href='../../../index.html'>← Menu principal</a></p>"
+        chapter_section += "</ul>\n"
+        chapter_sections.append(chapter_section)
 
-        with open(os.path.join(chapter_output_dir, f"{chapter}.html"), "w", encoding="utf-8") as f:
-            f.write(wrap(chapter_page_html))
+    # --- Build the single book page ---
+    book_page_html = f"<h1>{book_display_name}</h1>\n"
 
-        chapter_links.append((chapter_display_name, f"{chapter}/{chapter}.html"))
+    if poem_links:
+        book_page_html += "<ul>\n"
+        for title, link in poem_links:
+            book_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
+        book_page_html += "</ul>\n"
 
-    book_page_html = f"<h1>{book_display_name}</h1>\n<ul>\n"
-    for title, link in poem_links:
-        book_page_html += f"<li><a href='{link}'>{title}</a></li>\n"
-    for chapter_name, link in chapter_links:
-        book_page_html += f"<li><a href='{link}'>{chapter_name}</a></li>\n"
-    book_page_html += "</ul>\n<p><a href='../../index.html'>← Menu principal</a></p>"
+    book_page_html += "\n".join(chapter_sections)
+    book_page_html += "<p><a href='../../index.html'>← Menu principal</a></p>"
 
     with open(os.path.join(book_output_dir, f"{book}.html"), "w", encoding="utf-8") as f:
         f.write(wrap(book_page_html))
 
-    print(f"Generated book '{book}' with chapters and poems.")
+    print(f"Generated book '{book}' with hierarchical poem list.")
