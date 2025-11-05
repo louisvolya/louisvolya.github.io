@@ -45,49 +45,81 @@ def poem_sort_key(filename: str) -> int:
     return -1  
 
 
-# Generate homepage
+# --- Generate homepage ---
 homepage_content = "<h1>Œuvres</h1>\n<ul>\n"
+
+# Collect book metadata before writing homepage
+books_info = []
 
 for book in sorted(os.listdir(POEMS_DIR)):
     book_path = os.path.join(POEMS_DIR, book)
     if not os.path.isdir(book_path):
         continue
+
+    chapters = [d for d in os.listdir(book_path) if os.path.isdir(os.path.join(book_path, d))]
+    poems = [f for f in os.listdir(book_path) if f.endswith(".txt")]
+
+    books_info.append((book, poems, chapters))
+
+# Build homepage links dynamically based on folder content
+for book, poems, chapters in books_info:
     display_name = book.replace("_", " ")
-    book_index = f"site/{book}/{book}.html"
-    homepage_content += f"<li><a href='{book_index}'>{display_name}</a></li>\n"
+    if len(poems) == 1 and not chapters:
+        # Single poem only — homepage links directly to that poem
+        poem_filename = os.path.splitext(poems[0])[0] + ".html"
+        homepage_content += f"<li><a href='site/{book}/{poem_filename}'>{display_name}</a></li>\n"
+    else:
+        # Regular book with multiple poems or chapters
+        homepage_content += f"<li><a href='site/{book}/{book}.html'>{display_name}</a></li>\n"
 
 homepage_content += "</ul>\n"
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(wrap(homepage_content))
 
-print("Generated homepage with book links.")
+print("Generated homepage with adaptive book/poem links.")
 
 
-# Generate books and poems
-for book in sorted(os.listdir(POEMS_DIR)):
+# --- Generate books and poems ---
+for book, poems, chapters in books_info:
     book_path = os.path.join(POEMS_DIR, book)
-    if not os.path.isdir(book_path):
-        continue
-
-    book_display_name = book.replace("_", " ")
     book_output_dir = os.path.join(OUTPUT_DIR, book)
     os.makedirs(book_output_dir, exist_ok=True)
-
-    # Separate items into poems and chapters
-    chapters = []
-    poems = []
-
-    for item in sorted(os.listdir(book_path)):
-        item_path = os.path.join(book_path, item)
-        if os.path.isdir(item_path):
-            chapters.append(item)
-        elif item.endswith(".txt"):
-            poems.append(item)
+    book_display_name = book.replace("_", " ")
 
     poems = sorted(poems, key=poem_sort_key)
 
-    # --- Generate individual poem pages directly under the book ---
+    # Case 1: Folder has only one poem and no chapters → generate only that poem page
+    if len(poems) == 1 and not chapters:
+        filename = poems[0]
+        poem_path = os.path.join(book_path, filename)
+
+        with open(poem_path, "r", encoding="utf-8") as f:
+            raw_content = f.read().strip()
+
+        lines = raw_content.splitlines()
+        if not lines:
+            continue
+
+        title = lines[0].replace("Title: ", "").strip()
+        content = "\n".join(lines[2:]).strip()
+
+        poem_file_name = f"{os.path.splitext(filename)[0]}.html"
+        poem_file_path = os.path.join(book_output_dir, poem_file_name)
+
+        poem_html = (
+            f"<h2>{title}</h2>\n"
+            f"<div class='poem-box'>{content}</div>\n"
+            f"<p><a href='../../index.html'>← Menu principal</a></p>"
+        )
+
+        with open(poem_file_path, "w", encoding="utf-8") as f:
+            f.write(wrap(poem_html))
+
+        print(f"Generated single-poem page for '{book}'.")
+        continue  # Skip book page creation
+
+    # Case 2: Folder has multiple poems or chapters → generate normal book structure
     poem_links = []
     for i, filename in enumerate(poems):
         poem_path = os.path.join(book_path, filename)
@@ -118,7 +150,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
         poem_links.append((title, poem_file_name))
 
-    # --- Process chapter directories but DO NOT generate pages for them ---
+    # Process chapter directories
     chapter_sections = []
     for chapter in sorted(chapters):
         chapter_path = os.path.join(book_path, chapter)
@@ -163,7 +195,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
         chapter_section += "</ul>\n"
         chapter_sections.append(chapter_section)
 
-    # --- Build the single book page ---
+    # Build book page
     book_page_html = f"<h1>{book_display_name}</h1>\n"
 
     if poem_links:
