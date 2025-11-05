@@ -78,6 +78,47 @@
         margin-top: 1rem;
     }
 
+    /* === Theatre-specific formatting === */
+    .poem-box.theatre {
+        font-family: "Georgia", "Times New Roman", serif;
+        font-size: 1.1em; /* same as base */
+        text-align: left;
+    }
+
+    .poem-box.theatre .act,
+    .poem-box.theatre .scene {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        margin: 2rem 0 1rem 0;
+        font-size: 1.15em;
+        letter-spacing: 0.5px;
+    }
+
+    .poem-box.theatre .didascaly {
+        display: block;
+        text-align: center;
+        font-style: italic;
+        margin: 1rem 0;
+        color: #444;
+    }
+
+    .poem-box.theatre .dialogue-name {
+        font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .poem-box, .poem-box.theatre {
+            font-size: 1em;
+        }
+    }
+
   </style>
 </head>
 <body>
@@ -90,7 +131,7 @@
 	Tant de roses foulent mes pas que je ne saurais les citer – mais j’ai encore dans mon cœur les divines senteurs de leurs promesses mystiques. Mes sens n’écoutent que la rose blanche.
 
 	La lumière siffle dans l’ombre d’un kiosque. Debout, j’admire le jour s’ouvrir. Les yeux blêmes de l’aube chantent – de mémoire – la suprême mélodie.</div>
-<div class='nav-buttons' style='display:flex;justify-content:space-between;width:100%;max-width:600px;margin-top:1rem;'><a href='13_CONSTANTINOPLE.html'>&larr; Constantinople</a><a href='15_ÈVE.html'>Ève &rarr;</a></div>
+<div class='nav-buttons'><a href='13_CONSTANTINOPLE.html'>&larr; Constantinople</a><a href='15_ÈVE.html'>Ève &rarr;</a></div>
 <p><a href='Les_lauriers_de_Satan.html'>← Les lauriers de Satan</a></p>
   </div>
 </body>

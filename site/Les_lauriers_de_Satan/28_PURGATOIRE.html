@@ -78,6 +78,47 @@
         margin-top: 1rem;
     }
 
+    /* === Theatre-specific formatting === */
+    .poem-box.theatre {
+        font-family: "Georgia", "Times New Roman", serif;
+        font-size: 1.1em; /* same as base */
+        text-align: left;
+    }
+
+    .poem-box.theatre .act,
+    .poem-box.theatre .scene {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        margin: 2rem 0 1rem 0;
+        font-size: 1.15em;
+        letter-spacing: 0.5px;
+    }
+
+    .poem-box.theatre .didascaly {
+        display: block;
+        text-align: center;
+        font-style: italic;
+        margin: 1rem 0;
+        color: #444;
+    }
+
+    .poem-box.theatre .dialogue-name {
+        font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .poem-box, .poem-box.theatre {
+            font-size: 1em;
+        }
+    }
+
   </style>
 </head>
 <body>
@@ -100,7 +141,7 @@
 	Allons chez les morts ! Résurrection !
 
 	Et je quêterai le Bonheur où il m’attend. Je n’ai plus que faire de la Vérité – moi seul jouis de l’honnête existence. J’écouterai avec plénitude les âmes en peine et je pleurerai à toutes les émotions ; mon Cœur ira contre l’enfer.</div>
-<div class='nav-buttons' style='display:flex;justify-content:space-between;width:100%;max-width:600px;margin-top:1rem;'><a href='27_GÉNIE.html'>&larr; Génie</a><span></span></div>
+<div class='nav-buttons'><a href='27_GÉNIE.html'>&larr; Génie</a><span></span></div>
 <p><a href='Les_lauriers_de_Satan.html'>← Les lauriers de Satan</a></p>
   </div>
 </body>

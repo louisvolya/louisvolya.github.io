@@ -78,6 +78,47 @@
         margin-top: 1rem;
     }
 
+    /* === Theatre-specific formatting === */
+    .poem-box.theatre {
+        font-family: "Georgia", "Times New Roman", serif;
+        font-size: 1.1em; /* same as base */
+        text-align: left;
+    }
+
+    .poem-box.theatre .act,
+    .poem-box.theatre .scene {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        margin: 2rem 0 1rem 0;
+        font-size: 1.15em;
+        letter-spacing: 0.5px;
+    }
+
+    .poem-box.theatre .didascaly {
+        display: block;
+        text-align: center;
+        font-style: italic;
+        margin: 1rem 0;
+        color: #444;
+    }
+
+    .poem-box.theatre .dialogue-name {
+        font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 2rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .poem-box, .poem-box.theatre {
+            font-size: 1em;
+        }
+    }
+
   </style>
 </head>
 <body>
@@ -106,7 +147,7 @@
 	Les rames à bâbord saluèrent l’innommable pagaille de la guerre de sable – et toujours en avant. Un enfant jouait entre ses doigts avec la Torpille de Flammes. La vague ; elle frôla la mousse brune qui corrompt l’image de Dieu.
 
 	Mais allons ! La mâture a précédé la quille. Tâchons de nous souvenir des mensonges pieux qui nous furent conférés, et rappelons-nous ces soirées d’automne où l’écho nous appelait par des noms que nous avons oubliés.</div>
-<div class='nav-buttons' style='display:flex;justify-content:space-between;width:100%;max-width:600px;margin-top:1rem;'><a href='0_PREFACE.html'>&larr; Préface</a><span></span></div>
+<div class='nav-buttons'><a href='0_PREFACE.html'>&larr; Préface</a><span></span></div>
 <p><a href='Silence.html'>← Silence</a></p>
   </div>
 </body>

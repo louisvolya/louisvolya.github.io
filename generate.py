@@ -33,11 +33,11 @@ def build_nav(files, idx, base_path):
         next_file = f"{os.path.splitext(files[idx + 1])[0]}.html"
         next_html = f"<a href='{next_file}'>{next_title} &rarr;</a>"
 
-    return f"<div class='nav-buttons' style='display:flex;justify-content:space-between;width:100%;max-width:600px;margin-top:1rem;'>{prev_html}{next_html}</div>"
+    return f"<div class='nav-buttons'>{prev_html}{next_html}</div>"
 
 
 def poem_sort_key(filename: str) -> int:
-    """Extract leading number before '_' in filename for numeric sorting. Treat 0 as first."""
+    """Extract leading number before '_' in filename for numeric sorting."""
     base = os.path.splitext(filename)[0]
     if "_" in base:
         prefix = base.split("_", 1)[0]
@@ -46,116 +46,88 @@ def poem_sort_key(filename: str) -> int:
     return -1
 
 
-def format_theater_text(text: str) -> str:
-    """Apply theater-specific formatting to the poem content."""
+def format_theatre_text(text: str) -> str:
+    """Format theater text with ACTE/SCÈNE centered and didascalies italicized."""
+    lines = text.splitlines()
     formatted_lines = []
-    for line in text.splitlines():
+
+    for line in lines:
         stripped = line.strip()
-
         if not stripped:
-            formatted_lines.append("<br>")
+            formatted_lines.append("")  # preserve spacing
             continue
 
-        # ACTE or SCÈNE standalone line
-        if re.match(r"^(ACTE|SCÈNE)\s+[IVXLC\d]+\.?$", stripped, re.IGNORECASE):
-            formatted_lines.append(f"<div style='text-align:center;font-weight:bold;margin:1em 0;'>{stripped}</div>")
+        # ACTE or SCÈNE headers
+        if re.match(r"^ACTE\s+[IVXLC\d]+\.?$", stripped, re.IGNORECASE):
+            formatted_lines.append(f"<span class='act'>{stripped}</span>")
+            continue
+        if re.match(r"^SC[ÈE]NE\s+\d+\.?$", stripped, re.IGNORECASE):
+            formatted_lines.append(f"<span class='scene'>{stripped}</span>")
             continue
 
-        # Dialogue line: NAME: text
-        if re.match(r"^[A-ZÀÂÄÇÉÈÊËÎÏÔÖÙÛÜŸÆŒ' \-]+:", stripped):
-            parts = stripped.split(":", 1)
-            name = parts[0].strip()
-            speech = parts[1].strip() if len(parts) > 1 else ""
-            formatted_lines.append(f"<p><strong>{name}:</strong> {speech}</p>")
+        # Dialogue lines ("NAME:" pattern)
+        if re.match(r"^[A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ\- ]+\s*:", stripped):
+            name, dialogue = stripped.split(":", 1)
+            formatted_lines.append(f"<span class='dialogue-name'>{name.strip()}&nbsp;:</span> {dialogue.strip()}")
             continue
 
-        # Otherwise: didascaly (stage direction)
-        formatted_lines.append(f"<div style='text-align:center;font-style:italic;margin:0.5em 0;'>{stripped}</div>")
+        # Didascalies (stage directions, not preceded by name)
+        formatted_lines.append(f"<span class='didascaly'>{stripped}</span>")
 
     return "\n".join(formatted_lines)
 
 
-# --- Generate homepage ---
+# Generate homepage
 homepage_content = "<h1>Œuvres</h1>\n<ul>\n"
-
-# Collect book metadata before writing homepage
-books_info = []
 
 for book in sorted(os.listdir(POEMS_DIR)):
     book_path = os.path.join(POEMS_DIR, book)
     if not os.path.isdir(book_path):
         continue
 
-    chapters = [d for d in os.listdir(book_path) if os.path.isdir(os.path.join(book_path, d))]
-    poems = [f for f in os.listdir(book_path) if f.endswith(".txt")]
-
-    books_info.append((book, poems, chapters))
-
-# Build homepage links dynamically based on folder content
-for book, poems, chapters in books_info:
     display_name = book.replace("_", " ")
-    if len(poems) == 1 and not chapters:
-        # Single poem only — homepage links directly to that poem
-        poem_filename = os.path.splitext(poems[0])[0] + ".html"
-        homepage_content += f"<li><a href='site/{book}/{poem_filename}'>{display_name}</a></li>\n"
+
+    # Check if directory only contains one txt file
+    txt_files = [f for f in os.listdir(book_path) if f.endswith(".txt")]
+    if len(txt_files) == 1 and not any(os.path.isdir(os.path.join(book_path, d)) for d in os.listdir(book_path)):
+        single_file = txt_files[0]
+        homepage_content += f"<li><a href='site/{book}/{os.path.splitext(single_file)[0]}.html'>{display_name}</a></li>\n"
     else:
-        # Regular book with multiple poems or chapters
-        homepage_content += f"<li><a href='site/{book}/{book}.html'>{display_name}</a></li>\n"
+        book_index = f"site/{book}/{book}.html"
+        homepage_content += f"<li><a href='{book_index}'>{display_name}</a></li>\n"
 
 homepage_content += "</ul>\n"
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(wrap(homepage_content))
 
-print("Generated homepage with adaptive book/poem links.")
+print("Generated homepage with book links.")
 
 
-# --- Generate books and poems ---
-for book, poems, chapters in books_info:
+# Generate books and poems
+for book in sorted(os.listdir(POEMS_DIR)):
     book_path = os.path.join(POEMS_DIR, book)
+    if not os.path.isdir(book_path):
+        continue
+
+    book_display_name = book.replace("_", " ")
     book_output_dir = os.path.join(OUTPUT_DIR, book)
     os.makedirs(book_output_dir, exist_ok=True)
-    book_display_name = book.replace("_", " ")
+
+    # Separate items into poems and chapters
+    chapters = []
+    poems = []
+
+    for item in sorted(os.listdir(book_path)):
+        item_path = os.path.join(book_path, item)
+        if os.path.isdir(item_path):
+            chapters.append(item)
+        elif item.endswith(".txt"):
+            poems.append(item)
 
     poems = sorted(poems, key=poem_sort_key)
 
-    # Case 1: Folder has only one poem and no chapters → generate only that poem page
-    if len(poems) == 1 and not chapters:
-        filename = poems[0]
-        poem_path = os.path.join(book_path, filename)
-
-        with open(poem_path, "r", encoding="utf-8") as f:
-            raw_content = f.read().strip()
-
-        lines = raw_content.splitlines()
-        if not lines:
-            continue
-
-        title = lines[0].replace("Title: ", "").strip()
-        is_theater = any("Type: Théâtre" in line for line in lines[:3])
-
-        content = "\n".join(lines[2:]).strip()
-        if is_theater:
-            content = format_theater_text(content)
-        else:
-            content = f"<div class='poem-box'>{content}</div>"
-
-        poem_file_name = f"{os.path.splitext(filename)[0]}.html"
-        poem_file_path = os.path.join(book_output_dir, poem_file_name)
-
-        poem_html = (
-            f"<h2>{title}</h2>\n"
-            f"{content}\n"
-            f"<p><a href='../../index.html'>← Menu principal</a></p>"
-        )
-
-        with open(poem_file_path, "w", encoding="utf-8") as f:
-            f.write(wrap(poem_html))
-
-        print(f"Generated single-poem page for '{book}'.")
-        continue  # Skip book page creation
-
-    # Case 2: Folder has multiple poems or chapters → generate normal book structure
+    # --- Generate individual poem or theater pages ---
     poem_links = []
     for i, filename in enumerate(poems):
         poem_path = os.path.join(book_path, filename)
@@ -166,24 +138,34 @@ for book, poems, chapters in books_info:
         if not lines:
             continue
 
-        title = lines[0].replace("Title: ", "").strip()
-        is_theater = any("Type: Théâtre" in line for line in lines[:3])
-        content = "\n".join(lines[2:]).strip()
-        if is_theater:
-            content = format_theater_text(content)
-        else:
-            content = f"<div class='poem-box'>{content}</div>"
+        title_line = next((l for l in lines if l.startswith("Title: ")), None)
+        type_line = next((l for l in lines if l.startswith("Type: ")), None)
+
+        title = title_line.replace("Title: ", "").strip() if title_line else os.path.splitext(filename)[0]
+        is_theatre = type_line and "théâtre" in type_line.lower()
+
+        # Skip metadata lines
+        body_lines = [l for l in lines if not l.startswith(("Title:", "Type:"))]
+        content = "\n".join(body_lines).strip()
+
+        # Format if theater
+        if is_theatre:
+            content = format_theatre_text(content)
 
         poem_file_name = f"{os.path.splitext(filename)[0]}.html"
         poem_file_path = os.path.join(book_output_dir, poem_file_name)
 
         nav_html = build_nav(poems, i, book_path)
 
+        # Decide back link
+        back_link = "index.html" if len(poems) == 1 and not chapters else f"{book}.html"
+        back_text = "Menu principal" if back_link == "index.html" else book_display_name
+
         poem_html = (
             f"<h2>{title}</h2>\n"
-            f"{content}\n"
+            f"<div class='poem-box{' theatre' if is_theatre else ''}'>{content}</div>\n"
             f"{nav_html}\n"
-            f"<p><a href='{book}.html'>← {book_display_name}</a></p>"
+            f"<p><a href='{back_link}'>← {back_text}</a></p>"
         )
 
         with open(poem_file_path, "w", encoding="utf-8") as f:
@@ -191,7 +173,11 @@ for book, poems, chapters in books_info:
 
         poem_links.append((title, poem_file_name))
 
-    # Process chapter directories
+    # Skip book page for single-file directory
+    if len(poems) == 1 and not chapters:
+        continue
+
+    # --- Process chapter directories ---
     chapter_sections = []
     for chapter in sorted(chapters):
         chapter_path = os.path.join(book_path, chapter)
@@ -213,22 +199,24 @@ for book, poems, chapters in books_info:
             if not lines:
                 continue
 
-            title = lines[0].replace("Title: ", "").strip()
-            is_theater = any("Type: Théâtre" in line for line in lines[:3])
-            content = "\n".join(lines[2:]).strip()
-            if is_theater:
-                content = format_theater_text(content)
-            else:
-                content = f"<div class='poem-box'>{content}</div>"
+            title_line = next((l for l in lines if l.startswith("Title: ")), None)
+            type_line = next((l for l in lines if l.startswith("Type: ")), None)
+
+            title = title_line.replace("Title: ", "").strip() if title_line else os.path.splitext(filename)[0]
+            is_theatre = type_line and "théâtre" in type_line.lower()
+
+            body_lines = [l for l in lines if not l.startswith(("Title:", "Type:"))]
+            content = "\n".join(body_lines).strip()
+            if is_theatre:
+                content = format_theatre_text(content)
 
             poem_file_name = f"{os.path.splitext(filename)[0]}.html"
             poem_file_path = os.path.join(chapter_output_dir, poem_file_name)
 
             nav_html = build_nav(chapter_poems, i, chapter_path)
-
             poem_html = (
                 f"<h2>{title}</h2>\n"
-                f"{content}\n"
+                f"<div class='poem-box{' theatre' if is_theatre else ''}'>{content}</div>\n"
                 f"{nav_html}\n"
                 f"<p><a href='../{book}.html'>← {book_display_name}</a></p>"
             )
@@ -241,9 +229,8 @@ for book, poems, chapters in books_info:
         chapter_section += "</ul>\n"
         chapter_sections.append(chapter_section)
 
-    # Build book page
+    # --- Build the book page ---
     book_page_html = f"<h1>{book_display_name}</h1>\n"
-
     if poem_links:
         book_page_html += "<ul>\n"
         for title, link in poem_links:
