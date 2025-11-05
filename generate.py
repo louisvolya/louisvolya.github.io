@@ -1,4 +1,5 @@
 import os
+import re
 
 POEMS_DIR = "poems"       # input poems directory
 OUTPUT_DIR = "site"       # output site directory
@@ -21,15 +22,15 @@ def build_nav(files, idx, base_path):
     next_html = "<span></span>"
 
     if idx > 0:
-        prev_title_line = open(os.path.join(base_path, files[idx-1]), encoding="utf-8").read().splitlines()[0]
+        prev_title_line = open(os.path.join(base_path, files[idx - 1]), encoding="utf-8").read().splitlines()[0]
         prev_title = prev_title_line.replace("Title: ", "").strip()
-        prev_file = f"{os.path.splitext(files[idx-1])[0]}.html"
+        prev_file = f"{os.path.splitext(files[idx - 1])[0]}.html"
         prev_html = f"<a href='{prev_file}'>&larr; {prev_title}</a>"
 
     if idx < len(files) - 1:
-        next_title_line = open(os.path.join(base_path, files[idx+1]), encoding="utf-8").read().splitlines()[0]
+        next_title_line = open(os.path.join(base_path, files[idx + 1]), encoding="utf-8").read().splitlines()[0]
         next_title = next_title_line.replace("Title: ", "").strip()
-        next_file = f"{os.path.splitext(files[idx+1])[0]}.html"
+        next_file = f"{os.path.splitext(files[idx + 1])[0]}.html"
         next_html = f"<a href='{next_file}'>{next_title} &rarr;</a>"
 
     return f"<div class='nav-buttons' style='display:flex;justify-content:space-between;width:100%;max-width:600px;margin-top:1rem;'>{prev_html}{next_html}</div>"
@@ -42,7 +43,36 @@ def poem_sort_key(filename: str) -> int:
         prefix = base.split("_", 1)[0]
         if prefix.isdigit():
             return int(prefix)
-    return -1  
+    return -1
+
+
+def format_theater_text(text: str) -> str:
+    """Apply theater-specific formatting to the poem content."""
+    formatted_lines = []
+    for line in text.splitlines():
+        stripped = line.strip()
+
+        if not stripped:
+            formatted_lines.append("<br>")
+            continue
+
+        # ACTE or SCÈNE standalone line
+        if re.match(r"^(ACTE|SCÈNE)\s+[IVXLC\d]+\.?$", stripped, re.IGNORECASE):
+            formatted_lines.append(f"<div style='text-align:center;font-weight:bold;margin:1em 0;'>{stripped}</div>")
+            continue
+
+        # Dialogue line: NAME: text
+        if re.match(r"^[A-ZÀÂÄÇÉÈÊËÎÏÔÖÙÛÜŸÆŒ' \-]+:", stripped):
+            parts = stripped.split(":", 1)
+            name = parts[0].strip()
+            speech = parts[1].strip() if len(parts) > 1 else ""
+            formatted_lines.append(f"<p><strong>{name}:</strong> {speech}</p>")
+            continue
+
+        # Otherwise: didascaly (stage direction)
+        formatted_lines.append(f"<div style='text-align:center;font-style:italic;margin:0.5em 0;'>{stripped}</div>")
+
+    return "\n".join(formatted_lines)
 
 
 # --- Generate homepage ---
@@ -102,14 +132,20 @@ for book, poems, chapters in books_info:
             continue
 
         title = lines[0].replace("Title: ", "").strip()
+        is_theater = any("Type: Théâtre" in line for line in lines[:3])
+
         content = "\n".join(lines[2:]).strip()
+        if is_theater:
+            content = format_theater_text(content)
+        else:
+            content = f"<div class='poem-box'>{content}</div>"
 
         poem_file_name = f"{os.path.splitext(filename)[0]}.html"
         poem_file_path = os.path.join(book_output_dir, poem_file_name)
 
         poem_html = (
             f"<h2>{title}</h2>\n"
-            f"<div class='poem-box'>{content}</div>\n"
+            f"{content}\n"
             f"<p><a href='../../index.html'>← Menu principal</a></p>"
         )
 
@@ -131,7 +167,12 @@ for book, poems, chapters in books_info:
             continue
 
         title = lines[0].replace("Title: ", "").strip()
+        is_theater = any("Type: Théâtre" in line for line in lines[:3])
         content = "\n".join(lines[2:]).strip()
+        if is_theater:
+            content = format_theater_text(content)
+        else:
+            content = f"<div class='poem-box'>{content}</div>"
 
         poem_file_name = f"{os.path.splitext(filename)[0]}.html"
         poem_file_path = os.path.join(book_output_dir, poem_file_name)
@@ -140,7 +181,7 @@ for book, poems, chapters in books_info:
 
         poem_html = (
             f"<h2>{title}</h2>\n"
-            f"<div class='poem-box'>{content}</div>\n"
+            f"{content}\n"
             f"{nav_html}\n"
             f"<p><a href='{book}.html'>← {book_display_name}</a></p>"
         )
@@ -173,7 +214,12 @@ for book, poems, chapters in books_info:
                 continue
 
             title = lines[0].replace("Title: ", "").strip()
+            is_theater = any("Type: Théâtre" in line for line in lines[:3])
             content = "\n".join(lines[2:]).strip()
+            if is_theater:
+                content = format_theater_text(content)
+            else:
+                content = f"<div class='poem-box'>{content}</div>"
 
             poem_file_name = f"{os.path.splitext(filename)[0]}.html"
             poem_file_path = os.path.join(chapter_output_dir, poem_file_name)
@@ -182,7 +228,7 @@ for book, poems, chapters in books_info:
 
             poem_html = (
                 f"<h2>{title}</h2>\n"
-                f"<div class='poem-box'>{content}</div>\n"
+                f"{content}\n"
                 f"{nav_html}\n"
                 f"<p><a href='../{book}.html'>← {book_display_name}</a></p>"
             )
