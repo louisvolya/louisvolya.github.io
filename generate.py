@@ -16,6 +16,14 @@ def wrap(content: str) -> str:
     return template.replace("{poems_html}", content)
 
 
+def safe_url(name: str) -> str:
+    """
+    Transforme un nom en version sûre pour les URLs :
+    - remplace les apostrophes et guillemets par un tiret du 8 '_'
+    """
+    return name.replace("'", "_").replace("’", "_").replace('"', "_")
+
+
 def build_nav(files, idx, base_path):
     """Build navigation bar with prev on left, next on right."""
     prev_html = "<span></span>"
@@ -71,13 +79,13 @@ def format_theatre_text(text: str) -> str:
             formatted_lines.append(f"<span class='dialogue-name'>{name.strip()}&nbsp;:</span> {dialogue.strip()}")
             continue
 
-        # Didascalies (stage directions, not preceded by name)
+        # Didascalies (stage directions)
         formatted_lines.append(f"<span class='didascaly'>{stripped}</span>")
 
     return "\n".join(formatted_lines)
 
 
-# Generate homepage
+# --- Generate homepage ---
 homepage_content = "<h1>Œuvres</h1>\n<ul>\n"
 
 for book in sorted(os.listdir(POEMS_DIR)):
@@ -86,14 +94,15 @@ for book in sorted(os.listdir(POEMS_DIR)):
         continue
 
     display_name = book.replace("_", " ")
+    book_safe = safe_url(book)
 
     # Check if directory only contains one txt file
     txt_files = [f for f in os.listdir(book_path) if f.endswith(".txt")]
     if len(txt_files) == 1 and not any(os.path.isdir(os.path.join(book_path, d)) for d in os.listdir(book_path)):
         single_file = txt_files[0]
-        homepage_content += f"<li><a href='site/{book}/{os.path.splitext(single_file)[0]}.html'>{display_name}</a></li>\n"
+        homepage_content += f"<li><a href='site/{book_safe}/{os.path.splitext(single_file)[0]}.html'>{display_name}</a></li>\n"
     else:
-        book_index = f"site/{book}/{book}.html"
+        book_index = f"site/{book_safe}/{book_safe}.html"
         homepage_content += f"<li><a href='{book_index}'>{display_name}</a></li>\n"
 
 homepage_content += "</ul>\n"
@@ -104,14 +113,15 @@ with open("index.html", "w", encoding="utf-8") as f:
 print("Generated homepage with book links.")
 
 
-# Generate books and poems
+# --- Generate books and poems ---
 for book in sorted(os.listdir(POEMS_DIR)):
     book_path = os.path.join(POEMS_DIR, book)
     if not os.path.isdir(book_path):
         continue
 
     book_display_name = book.replace("_", " ")
-    book_output_dir = os.path.join(OUTPUT_DIR, book)
+    book_safe = safe_url(book)
+    book_output_dir = os.path.join(OUTPUT_DIR, book_safe)
     os.makedirs(book_output_dir, exist_ok=True)
 
     # Separate items into poems and chapters
@@ -144,11 +154,9 @@ for book in sorted(os.listdir(POEMS_DIR)):
         title = title_line.replace("Title: ", "").strip() if title_line else os.path.splitext(filename)[0]
         is_theatre = type_line and "théâtre" in type_line.lower()
 
-        # Skip metadata lines
         body_lines = [l for l in lines if not l.startswith(("Title:", "Type:"))]
         content = "\n".join(body_lines).strip()
 
-        # Format if theater
         if is_theatre:
             content = format_theatre_text(content)
 
@@ -157,12 +165,12 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
         nav_html = build_nav(poems, i, book_path)
 
-        # Decide back link
+        # Back link handling
         if len(poems) == 1 and not chapters:
             back_link = "../index.html"
             back_text = "Menu principal"
         else:
-            back_link = f"{book}.html"
+            back_link = f"{book_safe}.html"
             back_text = book_display_name
 
         poem_html = (
@@ -185,10 +193,12 @@ for book in sorted(os.listdir(POEMS_DIR)):
     chapter_sections = []
     for chapter in sorted(chapters):
         chapter_path = os.path.join(book_path, chapter)
-        chapter_output_dir = os.path.join(book_output_dir, chapter)
+        chapter_display_name = chapter.replace("_", " ")
+        chapter_safe = safe_url(chapter)
+
+        chapter_output_dir = os.path.join(book_output_dir, chapter_safe)
         os.makedirs(chapter_output_dir, exist_ok=True)
 
-        chapter_display_name = chapter.replace("_", " ")
         chapter_poems = [f for f in os.listdir(chapter_path) if f.endswith(".txt")]
         chapter_poems = sorted(chapter_poems, key=poem_sort_key)
 
@@ -222,13 +232,13 @@ for book in sorted(os.listdir(POEMS_DIR)):
                 f"<h2>{title}</h2>\n"
                 f"<div class='poem-box{' theatre' if is_theatre else ''}'>{content}</div>\n"
                 f"{nav_html}\n"
-                f"<p><a href='../{book}.html'>← {book_display_name}</a></p>"
+                f"<p><a href='../{book_safe}.html'>← {book_display_name}</a></p>"
             )
 
             with open(poem_file_path, "w", encoding="utf-8") as f:
                 f.write(wrap(poem_html))
 
-            chapter_section += f"<li><a href='{chapter}/{poem_file_name}'>{title}</a></li>\n"
+            chapter_section += f"<li><a href='{chapter_safe}/{poem_file_name}'>{title}</a></li>\n"
 
         chapter_section += "</ul>\n"
         chapter_sections.append(chapter_section)
@@ -244,7 +254,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
     book_page_html += "\n".join(chapter_sections)
     book_page_html += "<p><a href='../../index.html'>← Menu principal</a></p>"
 
-    with open(os.path.join(book_output_dir, f"{book}.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(book_output_dir, f"{book_safe}.html"), "w", encoding="utf-8") as f:
         f.write(wrap(book_page_html))
 
     print(f"Generated book '{book}' with hierarchical poem list.")
