@@ -20,8 +20,25 @@ def safe_url(name: str) -> str:
     """
     Transforme un nom en version sûre pour les URLs :
     - remplace les apostrophes et guillemets par un tiret du 8 '_'
+    - supprime les espaces de fin et autres caractères problématiques
     """
-    return name.replace("'", "_").replace("’", "_").replace('"', "_")
+    return (
+        name.replace("'", "_")
+        .replace("’", "_")
+        .replace('"', "_")
+        .strip()
+    )
+
+
+def display_title_from_filename(filename: str) -> str:
+    """
+    Extrait un titre lisible depuis un nom de fichier :
+    supprime le préfixe numérique et le tiret du 8 initial si présent.
+    """
+    base = os.path.splitext(filename)[0]
+    # Supprime "0_", "12_", etc. au début
+    base = re.sub(r"^\d+_", "", base)
+    return base.replace("_", " ").strip()
 
 
 def build_nav(files, idx, base_path):
@@ -32,12 +49,16 @@ def build_nav(files, idx, base_path):
     if idx > 0:
         prev_title_line = open(os.path.join(base_path, files[idx - 1]), encoding="utf-8").read().splitlines()[0]
         prev_title = prev_title_line.replace("Title: ", "").strip()
+        if not prev_title:
+            prev_title = display_title_from_filename(files[idx - 1])
         prev_file = f"{os.path.splitext(files[idx - 1])[0]}.html"
         prev_html = f"<a href='{prev_file}'>&larr; {prev_title}</a>"
 
     if idx < len(files) - 1:
         next_title_line = open(os.path.join(base_path, files[idx + 1]), encoding="utf-8").read().splitlines()[0]
         next_title = next_title_line.replace("Title: ", "").strip()
+        if not next_title:
+            next_title = display_title_from_filename(files[idx + 1])
         next_file = f"{os.path.splitext(files[idx + 1])[0]}.html"
         next_html = f"<a href='{next_file}'>{next_title} &rarr;</a>"
 
@@ -137,7 +158,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
     poems = sorted(poems, key=poem_sort_key)
 
-    # --- Generate individual poem or theater pages ---
+    # --- Generate individual poem pages ---
     poem_links = []
     for i, filename in enumerate(poems):
         poem_path = os.path.join(book_path, filename)
@@ -151,7 +172,11 @@ for book in sorted(os.listdir(POEMS_DIR)):
         title_line = next((l for l in lines if l.startswith("Title: ")), None)
         type_line = next((l for l in lines if l.startswith("Type: ")), None)
 
-        title = title_line.replace("Title: ", "").strip() if title_line else os.path.splitext(filename)[0]
+        if title_line:
+            title = title_line.replace("Title: ", "").strip()
+        else:
+            title = display_title_from_filename(filename)
+
         is_theatre = type_line and "théâtre" in type_line.lower()
 
         body_lines = [l for l in lines if not l.startswith(("Title:", "Type:"))]
@@ -165,7 +190,7 @@ for book in sorted(os.listdir(POEMS_DIR)):
 
         nav_html = build_nav(poems, i, book_path)
 
-        # Back link handling
+        # Back link
         if len(poems) == 1 and not chapters:
             back_link = "../index.html"
             back_text = "Menu principal"
@@ -216,7 +241,11 @@ for book in sorted(os.listdir(POEMS_DIR)):
             title_line = next((l for l in lines if l.startswith("Title: ")), None)
             type_line = next((l for l in lines if l.startswith("Type: ")), None)
 
-            title = title_line.replace("Title: ", "").strip() if title_line else os.path.splitext(filename)[0]
+            if title_line:
+                title = title_line.replace("Title: ", "").strip()
+            else:
+                title = display_title_from_filename(filename)
+
             is_theatre = type_line and "théâtre" in type_line.lower()
 
             body_lines = [l for l in lines if not l.startswith(("Title:", "Type:"))]
